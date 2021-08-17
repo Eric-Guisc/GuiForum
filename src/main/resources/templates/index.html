@@ -1,18 +1,20 @@
 <!doctype html>
-<html lang="zh_CN">
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>GuiForum</title>
     <meta name="keywords" content="HTML5 Template">
     <meta name="description" content="Forum - Responsive HTML5 Template">
     <meta name="author" content="Forum">
-    <link rel="shortcut icon" href="/static/front/favicon/favicon.ico">
+    <link rel="shortcut icon" th:href="@{/front/favicon/favicon.ico}">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/static/front/css/style.css?version=2.0.1">
-    <link rel="stylesheet" href="/static/plugins/toast/css/jquery.toast.min.css">
-    <link rel="stylesheet" href="/static/front/css/main.css?version=2.0.1">
-    <link rel="stylesheet" href="/static/front/css/jsmodern-1.1.1.min.css">
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">-->
+    <link rel="stylesheet" th:href="@{/front/css/style.css?version=2.0.1}">
+    <link rel="stylesheet" th:href="@{/static/plugins/toast/css/jquery.toast.min.css}">
+    <link rel="stylesheet" th:href="@{/front/css/main.css?version=2.0.1}">
+    <link rel="stylesheet" th:href="@{/static/front/css/jsmodern-1.1.1.min.css}">
+
 
 </head>
 <body>
@@ -176,265 +178,66 @@
                             <div class="tt-col-value">发布</div>
                         </div>
                         <div id="tt-item-wrapper">
-                            <div class="tt-item">
+                            <div class="tt-item" th:each="item:${postVO}">
                                 <div class="tt-col-avatar">
                                     <a href="/user/9">
-                                        <img src="/static/images/avatar/9.jpeg" class="avatar" alt="">
+                                        <img th:src="${item.user.avatar}" class="avatar" th:alt="${item.user.username}">
                                     </a>
                                 </div>
                                 <div class="tt-col-description">
                                     <h6 class="tt-title">
                                         <a href="/post/23">
-                                            <span class="font-success">【置顶】</span>
-                                            <span class="font-warning">【推荐】</span>
-                                            Twitter 如何应用 Druid 分析 ZB 级实时数据？
+                                            <span class="font-success" th:if="${item.post.type==1}">【置顶】</span>
+                                            <span class="font-warning" th:if="${item.post.recommendStatus==1}">【推荐】</span>
+                                            <span th:utext="${item.post.title}">Twitter 如何应用 Druid 分析 ZB 级实时数据？</span>
                                         </a></h6>
                                     <div class="row align-items-center no-gutters">
                                         <div class="col-11">
-                                            <ul class="tt-list-badge">
-                                                <li><a
-                                                        href="/tag/62"><span
-                                                        class="tt-badge">Twitter</span></a></li>
-                                                <li><a
-                                                        href="/tag/58"><span
-                                                        class="tt-badge">Druid2</span></a></li>
+                                            <ul class="tt-list-badge" th:if="${item.tags != null}">
+                                                <li th:each="tag:${item.tags}">
+                                                    <a href="/tag/62">
+                                                        <span class="tt-badge" th:text="${tag.name}">Twitter</span>
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </div>
                                         <div class="col-1 ml-auto show-mobile">
-                                            <div class="tt-value">5月前</div>
+                                            <div class="tt-value" th:text="${item.time}">5月前</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tt-col-category"><a href="/category/9"><span
-                                        class="tt-color03 tt-badge">后端开发</span></a>
+                                        class="tt-color03 tt-badge" th:text="${item.category.name}">后端开发1</span></a>
                                 </div>
                                 <div class="tt-col-value  hide-mobile">1</div>
-                                <div class="tt-col-value tt-color-select  hide-mobile">3</div>
+                                <div class="tt-col-value tt-color-select  hide-mobile" th:text="${item.post.commentCount}">3</div>
                                 <div class="tt-col-value  hide-mobile">26</div>
-                                <div class="tt-col-value hide-mobile">5月前</div>
-                            </div>
-                            <div class="tt-item">
-                                <div class="tt-col-avatar">
-                                    <a href="/user/9">
-                                        <img src="/static/images/avatar/9.jpeg" class="avatar" alt="">
-                                    </a>
-                                </div>
-                                <div class="tt-col-description">
-                                    <h6 class="tt-title">
-                                        <a href="/post/25">
-                                            <span class="font-success">【置顶】</span>
-
-                                            CPU 上运算比 GPU 还快？美国莱斯大学最新研究克服硬件障碍
-                                        </a></h6>
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col-11">
-                                            <ul class="tt-list-badge">
-                                                <li><a
-                                                        href="/tag/64"><span
-                                                        class="tt-badge">测试</span></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-1 ml-auto show-mobile">
-                                            <div class="tt-value">6月前</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tt-col-category"><a href="/category/9"><span
-                                        class="tt-color03 tt-badge">后端开发</span></a>
-                                </div>
-                                <div class="tt-col-value  hide-mobile">3</div>
-                                <div class="tt-col-value tt-color-select  hide-mobile">1</div>
-                                <div class="tt-col-value  hide-mobile">61</div>
-                                <div class="tt-col-value hide-mobile">6月前</div>
-                            </div>
-                            <div class="tt-item">
-                                <div class="tt-col-avatar">
-                                    <a href="/user/9">
-                                        <img src="/static/images/avatar/9.jpeg" class="avatar" alt="">
-                                    </a>
-                                </div>
-                                <div class="tt-col-description">
-                                    <h6 class="tt-title">
-                                        <a href="/post/35">
-                                            <span class="font-success">【置顶】</span>
-
-                                            Twitter 如何应用 Druid 分析 ZB 级实时数据？
-                                        </a></h6>
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col-11">
-                                            <ul class="tt-list-badge">
-                                                <li><a
-                                                        href="/tag/60"><span
-                                                        class="tt-badge">CPU</span></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-1 ml-auto show-mobile">
-                                            <div class="tt-value">6月前</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tt-col-category"><a href="/category/10"><span
-                                        class="tt-color04 tt-badge">大数据</span></a>
-                                </div>
-                                <div class="tt-col-value  hide-mobile">1</div>
-                                <div class="tt-col-value tt-color-select  hide-mobile">0</div>
-                                <div class="tt-col-value  hide-mobile">16</div>
-                                <div class="tt-col-value hide-mobile">6月前</div>
-                            </div>
-                            <div class="tt-item">
-                                <div class="tt-col-avatar">
-                                    <a href="/user/9">
-                                        <img src="/static/images/avatar/9.jpeg" class="avatar" alt="">
-                                    </a>
-                                </div>
-                                <div class="tt-col-description">
-                                    <h6 class="tt-title">
-                                        <a href="/post/22">
-
-
-                                            腾讯首次公布研发大数据：研发人员占比 66%，C++ 是最常用语言
-                                        </a></h6>
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col-11">
-                                            <ul class="tt-list-badge">
-                                                <li><a
-                                                        href="/tag/50"><span
-                                                        class="tt-badge">大数据</span></a></li>
-                                                <li><a
-                                                        href="/tag/57"><span
-                                                        class="tt-badge">开源</span></a></li>
-                                                <li><a
-                                                        href="/tag/56"><span
-                                                        class="tt-badge">腾讯</span></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-1 ml-auto show-mobile">
-                                            <div class="tt-value">5月前</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tt-col-category"><a href="/category/10"><span
-                                        class="tt-color04 tt-badge">大数据</span></a>
-                                </div>
-                                <div class="tt-col-value  hide-mobile">0</div>
-                                <div class="tt-col-value tt-color-select  hide-mobile">2</div>
-                                <div class="tt-col-value  hide-mobile">39</div>
-                                <div class="tt-col-value hide-mobile">5月前</div>
-                            </div>
-                            <div class="tt-item">
-                                <div class="tt-col-avatar">
-                                    <a href="/user/1">
-                                        <img src="/static/images/avatar/1.jpeg" class="avatar" alt="">
-                                    </a>
-                                </div>
-                                <div class="tt-col-description">
-                                    <h6 class="tt-title">
-                                        <a href="/post/29">
-
-                                            <span class="font-warning">【推荐】</span>
-                                            Java 失宠，谷歌宣布 Kotlin 现在是 Android 开发的首选语言
-                                        </a></h6>
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col-11">
-                                            <ul class="tt-list-badge">
-                                                <li><a
-                                                        href="/tag/60"><span
-                                                        class="tt-badge">CPU</span></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-1 ml-auto show-mobile">
-                                            <div class="tt-value">5月前</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tt-col-category"><a href="/category/11"><span
-                                        class="tt-color05 tt-badge">人工智能</span></a>
-                                </div>
-                                <div class="tt-col-value  hide-mobile">0</div>
-                                <div class="tt-col-value tt-color-select  hide-mobile">2</div>
-                                <div class="tt-col-value  hide-mobile">10</div>
-                                <div class="tt-col-value hide-mobile">5月前</div>
-                            </div>
-                            <div class="tt-item">
-                                <div class="tt-col-avatar">
-                                    <a href="/user/9">
-                                        <img src="/static/images/avatar/9.jpeg" class="avatar" alt="">
-                                    </a>
-                                </div>
-                                <div class="tt-col-description">
-                                    <h6 class="tt-title">
-                                        <a href="/post/28">
-
-
-                                            CPU 上运算比 GPU 还快？美国莱斯大学最新研究克服硬件障碍
-                                        </a></h6>
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col-11">
-                                            <ul class="tt-list-badge">
-                                                <li><a
-                                                        href="/tag/60"><span
-                                                        class="tt-badge">CPU</span></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-1 ml-auto show-mobile">
-                                            <div class="tt-value">5月前</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tt-col-category"><a href="/category/11"><span
-                                        class="tt-color05 tt-badge">人工智能</span></a>
-                                </div>
-                                <div class="tt-col-value  hide-mobile">2</div>
-                                <div class="tt-col-value tt-color-select  hide-mobile">1</div>
-                                <div class="tt-col-value  hide-mobile">46</div>
-                                <div class="tt-col-value hide-mobile">5月前</div>
+                                <div class="tt-col-value hide-mobile" th:text="${item.time}" style="font-size: 14px">5月前</div>
                             </div>
                         </div>
 
-                        <ul class="pagination justify-content-center" style="float: right;">
+                        <ul class="pagination justify-content-center" style="float: right;" th:if="${page.rows > 0}">
+                            <!-- 首页 -->
+                            <li class="page-item">
+                                <a class="page-link" th:href="@{${page.path}(current=1)}">首页</a>
+                            </li>
                             <!-- 上一页 -->
-
-
-                            <li class="page-item active">
-                                <!-- 当前页面小于等于4 -->
-                                <a class="page-link"
-                                   href="?page=1&amp;sort=">
-                                    1
-                                </a>
+                            <!-- 修改class时，如果里面还有静态属性，需要用||包起来 -->
+                            <li th:class="|page-item ${page.current<=1?'disabled':''}|">
+                                <a class="page-link" th:href="@{${page.path}(current=${page.current}-1)}">上一页</a>
                             </li>
-
+                            <!-- 中间页码 -->
+                            <li th:class="|page-item ${page.current==i?'active':''}|"  th:each="i:${#numbers.sequence(page.from,page.to)}">
+                                <a class="page-link" th:href="@{${page.path}(current=${i})}" th:text="${i}">1</a>
+                            </li>
+                            <!-- 下一页 -->
+                            <li th:class="|page-item ${page.current>=page.total?'disabled':''}|">
+                                <a class="page-link" th:href="@{${page.path}(current=${page.current+1})}">下一页</a>
+                            </li>
+                            <!-- 末页 -->
                             <li class="page-item">
-                                <!-- 当前页面小于等于4 -->
-                                <a class="page-link"
-                                   href="?page=2&amp;sort=">
-                                    2
-                                </a>
+                                <a class="page-link" th:href="@{${page.path}(current=${page.total})}">末页</a>
                             </li>
-
-                            <li class="page-item">
-                                <!-- 当前页面小于等于4 -->
-                                <a class="page-link"
-                                   href="?page=3&amp;sort=">
-                                    3
-                                </a>
-                            </li>
-
-                            <li class="page-item">
-                                <!-- 当前页面小于等于4 -->
-                                <a class="page-link"
-                                   href="?page=4&amp;sort=">
-                                    4
-                                </a>
-                            </li>
-
-                            <li class="page-item">
-                                <!-- 下一页 -->
-                                <a class="page-link"
-                                   href="?page=2&amp;sort=">
-                                    下一页
-                                </a>
-                            </li>
-
                         </ul>
 
                     </div>
@@ -590,14 +393,15 @@
     </div>
 </div>
 
-<script src="/static/front/js/bundle.js"></script>
-<script src="/static/front/js/jsmodern-1.1.1.min.js"></script>
-<script src="/static/plugins/toast/js/jquery.toast.min.js"></script>
-<link rel="stylesheet" href="/static/front/css/highlight.css">
-<link rel="stylesheet" href="/static/front/css/prettify.css">
-<script src="/static/front/js/highlight.js"></script>
-<script src="/static/front/js/prettify.js"></script>
-<script src="/static/front/js/main.js?version=2.0.1"></script>
+<script th:src="@{/front/js/bundle.js}"></script>
+<script th:src="@{/front/js/jsmodern-1.1.1.min.js}"></script>
+<script th:src="@{/plugins/toast/js/jquery.toast.min.js}"></script>
+<link rel="stylesheet" th:href="@{/front/css/highlight.css}">
+<link rel="stylesheet" th:href="@{/front/css/prettify.css}">
+<script th:src="@{/front/js/highlight.js}"></script>
+<script th:src="@{/front/js/prettify.js}"></script>
+<script th:src="@{/front/js/main.js?version=2.0.1}"></script>
+
 <svg width="0" height="0" class="hidden">
     <symbol aria-hidden="true" data-prefix="fab" data-icon="facebook-f" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 512" id="facebook-f-brands">
         <path fill="currentColor" d="M215.8 85H264V3.6C255.7 2.5 227.1 0 193.8 0 124.3 0 76.7 42.4 76.7 120.3V192H0v91h76.7v229h94V283h73.6l11.7-91h-85.3v-62.7c0-26.3 7.3-44.3 45.1-44.3z"></path>

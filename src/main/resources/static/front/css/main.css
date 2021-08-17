@@ -69,6 +69,14 @@
     border-color: #2172cd;
 }
 
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: auto;
+    background-color: #fff;
+    border-color: #dee2e6
+}
+
 .page-item:last-child .page-link {
     border-top-right-radius: .25rem;
     border-bottom-right-radius: .25rem;

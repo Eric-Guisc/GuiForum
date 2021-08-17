@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.gsc.guiforum.dao.CategoryMapper">
+
+    <sql id="insertFields">
+        name, create_time
+    </sql>
+
+    <sql id="selectFields">
+        id, name, create_time
+    </sql>
+
+    <insert id="insertCategory" parameterType="Category">
+        insert into category(<include refid="insertFields"></include>)
+        values(#{name}, #{createTime})
+    </insert>
+
+    <select id="selectCategories" resultType="Category">
+        select <include refid="selectFields"></include>
+        from category
+        order by create_time desc
+    </select>
+
+    <select id="selectCategoryById" resultType="Category">
+        select <include refid="selectFields"></include>
+        from category
+        where id = #{id}
+    </select>
+
+</mapper>

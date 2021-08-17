@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.gsc.guiforum.dao.UserMapper">
+
+    <sql id="insertFields">
+        username, password, salt, email, avatar, type, activation_status, activation_code, create_time
+    </sql>
+
+    <sql id="selectFields">
+        id, username, password, salt, email, avatar, type, activation_status, activation_code, create_time
+    </sql>
+
+    <!-- 主键自增，不需要设置主键的值，但是需要指定主键在数据表中的字段 -->
+    <insert id="insertUser" parameterType="User">
+        insert into user(<include refid="insertFields"></include>)
+        values(#{username}, #{password}, #{salt}, #{email}, #{avatar}, #{type}, #{activationStatus}, #{activationCode}, #{createTime})
+    </insert>
+
+    <select id="selectUserById" resultType="User">
+        select <include refid="selectFields"></include>
+        from user
+        where id = #{id}
+    </select>
+
+</mapper>

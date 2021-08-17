@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.gsc.guiforum.dao.TagMapper">
+
+    <sql id="insertFields">
+        name, create_time
+    </sql>
+
+    <sql id="selectFields">
+        id, name, create_time
+    </sql>
+
+    <insert id="insertTag" parameterType="Tag">
+        insert into tag(<include refid="insertFields"></include>)
+        values(#{name}, #{createTime})
+    </insert>
+
+    <select id="selectTags" resultType="Tag">
+        select <include refid="selectFields"></include>
+        from tag
+        order by create_time desc
+    </select>
+
+    <select id="selectTagById" resultType="Tag">
+        select <include refid="selectFields"></include>
+        from tag
+        where id = #{id}
+    </select>
+
+    <select id="selectTagsByIds" resultType="Tag">
+        select <include refid="selectFields"></include>
+        from tag
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+</mapper>

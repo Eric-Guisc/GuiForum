@@ -61,6 +61,15 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+
+
+        <!-- 将时间转换成xxx前这种格式 -->
+        <dependency>
+            <groupId>org.ocpsoft.prettytime</groupId>
+            <artifactId>prettytime</artifactId>
+            <version>4.0.5.Final</version>
+        </dependency>
+
     </dependencies>
 
     <build>
