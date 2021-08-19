@@ -13,7 +13,7 @@
     </sql>
 
     <!-- 主键自增，不需要设置主键的值，但是需要指定主键在数据表中的字段 -->
-    <insert id="insertUser" parameterType="User">
+    <insert id="insertUser" parameterType="User" keyProperty="id">
         insert into user(<include refid="insertFields"></include>)
         values(#{username}, #{password}, #{salt}, #{email}, #{avatar}, #{type}, #{activationStatus}, #{activationCode}, #{createTime})
     </insert>
@@ -23,5 +23,21 @@
         from user
         where id = #{id}
     </select>
+
+    <select id="selectUserByName" resultType="User">
+        select <include refid="selectFields"></include>
+        from user
+        where username = #{name}
+    </select>
+
+    <select id="selectUserByEmail" resultType="User">
+        select <include refid="selectFields"></include>
+        from user
+        where email = #{email}
+    </select>
+
+    <update id="updateActivationStatus">
+        update user set activation_status = #{status} where id = #{id}
+    </update>
 
 </mapper>

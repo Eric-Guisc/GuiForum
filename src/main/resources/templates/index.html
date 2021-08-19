@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>GuiForum</title>
@@ -9,13 +9,10 @@
     <link rel="shortcut icon" th:href="@{/front/favicon/favicon.ico}">
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">-->
     <link rel="stylesheet" th:href="@{/front/css/style.css?version=2.0.1}">
     <link rel="stylesheet" th:href="@{/static/plugins/toast/css/jquery.toast.min.css}">
     <link rel="stylesheet" th:href="@{/front/css/main.css?version=2.0.1}">
     <link rel="stylesheet" th:href="@{/static/front/css/jsmodern-1.1.1.min.css}">
-
-
 </head>
 <body>
 <!-- tt-mobile menu -->
@@ -115,7 +112,7 @@
 
                 <div class="tt-account-btn">
                     <a href="/login" class="btn btn-primary">登录</a>
-                    <a href="/register" class="btn btn-secondary">注册</a>
+                    <a th:href="@{/register}" class="btn btn-secondary">注册</a>
                 </div>
 
                 　

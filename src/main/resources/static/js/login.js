@@ -1,3 +1,10 @@
+var contextPath = "/forum";
+
+function refresh_kaptcha() {
+    var path = "/forum/kaptcha?p=" + Math.random();
+    $("#kaptcha1").attr("src", path);
+  };
+
 $(document).ready(function () {
     const userName = localStorage.getItem("userName");
     const userPass = localStorage.getItem("userPass");
@@ -51,30 +58,33 @@ $('#btn-login').click(function () {
 
 
 $('#btn-register').click(function () {
-    $('#btn-register').button('loading');
-    const userName = $("#userName").val();
-    const userPass = $("#userPass").val();
-    const userEmail = $("#userEmail").val();
-    if (userName == "" || userPass == "" || userEmail == "") {
+//    $('#btn-register').button('loading');
+    const username = $("#username").val();
+    const password = $("#password").val();
+    const email = $("#email").val();
+    const kaptcha = $("#kaptcha").val();
+    if (username == "" || password == "" || email == "") {
         showMsg("请输入完整信息！", "error", 1000);
         $('#btn-register').button('reset');
     } else {
         $.ajax({
             type: 'POST',
-            url: '/register',
+            url: contextPath + '/register',
             async: false,
             data: {
-                'userName': userName,
-                'userPass': userPass,
-                'userEmail': userEmail
+                'username': username,
+                'password': password,
+                'email': email,
+                'kaptcha': kaptcha
             },
             success: function (data) {
                 if (data.code == 1) {
-                    showMsgAndRedirect(data.msg, "success", 1000, "/login");
+                    showMsgAndRedirect(data.msg, "success", 2000, contextPath + "/login");
                 } else {
                     showMsg(data.msg, "error", 1000);
                     $('#btn-register').button('reset');
-                    localStorage.setItem('userName', userName);
+                    localStorage.setItem('username', username);
+                    refresh_kaptcha();
                 }
             }
         });

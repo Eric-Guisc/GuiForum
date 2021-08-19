@@ -84,6 +84,24 @@ public class MapperTest {
         System.out.println(user);
     }
 
+    @Test
+    public void selectUserByName() {
+        User user = userMapper.selectUserByName("guisc");
+        System.out.println(user);
+    }
+
+    @Test
+    public void selectUserByEmail() {
+        User user = userMapper.selectUserByEmail("test@qq.com");
+        System.out.println(user);
+    }
+
+    @Test
+    public void updateActivationStatus() {
+        int count = userMapper.updateActivationStatus(1, 0);
+        System.out.println(count);
+    }
+
 
     // *****************  CategoryMapper  **********************
     @Test
