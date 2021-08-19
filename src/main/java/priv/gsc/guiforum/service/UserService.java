@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import priv.gsc.guiforum.dao.LoginTicketMapper;
 import priv.gsc.guiforum.dao.UserMapper;
+import priv.gsc.guiforum.entity.LoginTicket;
 import priv.gsc.guiforum.entity.User;
 import priv.gsc.guiforum.util.GuiForumEnum;
 import priv.gsc.guiforum.util.GuiForumUtils;
@@ -35,6 +37,9 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
+
     private GuiForumEnum.ACTIVATION activationEnum;
 
     public User findUserById(int id) {
@@ -62,7 +67,7 @@ public class UserService {
         user.setUsername(username);
         user.setEmail(email);
         user.setSalt(GuiForumUtils.generateUUID().substring(0, 5));
-        user.setPassword(GuiForumUtils.md5(user.getPassword() + user.getSalt()));
+        user.setPassword(GuiForumUtils.md5(password + user.getSalt()));
         user.setAvatar(String.format("/images/avatar/%d.jpeg", new Random().nextInt(40)+1));
         user.setType(0);            // 普通用户
         user.setActivationStatus(0);// 未激活
@@ -94,5 +99,44 @@ public class UserService {
         } else {    // 激活失败
             return activationEnum.ACTIVATION_FAILURE.getCode();
         }
+    }
+
+    public Map<String, Object> login(String usernameOrEmail, String password, int expiredSeconds) {
+        Map<String, Object> map = new HashMap<>();
+
+        // 验证用户名或邮箱
+        User userByUsername = userMapper.selectUserByName(usernameOrEmail);
+        User userByEmail = userMapper.selectUserByEmail(usernameOrEmail);
+        User user = userByUsername != null ? userByUsername : (userByEmail != null ? userByEmail : null);
+        if (user == null) {
+            map.put("usernameOrEmailMsg", "该用户名或邮箱不存在");
+            return map;
+        }
+        // 验证激活状态
+        if (user.getActivationStatus() == 0) {
+            map.put("activationMsg", "该账号未激活");
+            return map;
+        }
+        // 验证密码
+        password = GuiForumUtils.md5(password + user.getSalt());
+        if (!password.equals(user.getPassword())) {
+            map.put("passwordMsg", "密码错误");
+            return map;
+        }
+
+        // 生成登录凭证
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(user.getId());
+        loginTicket.setTicket(GuiForumUtils.generateUUID());
+        loginTicket.setValidStatus(0);      // 有效
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000));
+        loginTicketMapper.insertLoginTicket(loginTicket);
+        map.put("ticket", loginTicket.getTicket());
+
+        return map;
+    }
+
+    public void logout(String ticket) {
+        loginTicketMapper.updateValidStatus(ticket, 1);
     }
 }

@@ -20,4 +20,6 @@ public interface UserMapper {
 
     // 修改用户的激活状态为已激活
     int updateActivationStatus(int id, int status);
+
+    //
 }

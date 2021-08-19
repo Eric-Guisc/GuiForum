@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import priv.gsc.guiforum.GuiForumApplication;
 import priv.gsc.guiforum.dao.*;
 import priv.gsc.guiforum.entity.*;
+import priv.gsc.guiforum.util.GuiForumUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,9 @@ public class MapperTest {
 
     @Autowired
     private PostTagMapper postTagMapper;
+
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
 
     // *****************  PostMapper  **********************
     @Test
@@ -176,5 +180,32 @@ public class MapperTest {
         List<Integer> integers = postTagMapper.selectTagIdsByPostId(1);
         System.out.println(integers);
     }
+
+
+    // *****************  LoginTicketMapper  **********************
+
+    @Test
+    public void insertLoginTicket() {
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(1);
+        loginTicket.setTicket(GuiForumUtils.generateUUID());
+        loginTicket.setValidStatus(0);
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + 3600 * 2 * 1000));
+        int count = loginTicketMapper.insertLoginTicket(loginTicket);
+        System.out.println(count);
+    }
+
+    @Test
+    public void selectLoginTicketByTicket() {
+        LoginTicket loginTicket = loginTicketMapper.selectLoginTicketByTicket("107727b74022447d9838c2a68da3832e");
+        System.out.println(loginTicket);
+    }
+
+    @Test
+    public void updateValidStatus() {
+        int count = loginTicketMapper.updateValidStatus("1a5cc08a864c4682a3dc234334955e8d", 1);
+        System.out.println(count);
+    }
+
 
 }

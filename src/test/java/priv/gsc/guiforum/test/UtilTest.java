@@ -20,4 +20,10 @@ public class UtilTest {
         String time = GuiForumUtils.timeParseToPrettyTime(new Date());
         System.out.println(time);
     }
+
+    @Test
+    public void testMd5() {
+        String s = GuiForumUtils.md5("guisc1" + "50ab8");
+        System.out.println(s);
+    }
 }
