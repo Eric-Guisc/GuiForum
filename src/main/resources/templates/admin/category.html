@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>初云博客后台</title>
+  <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/plugins/pace/pace.min.css">
+  <link rel="stylesheet" href="/static/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/static/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="/static/css/style.css?version=2.0.1">
+  <link rel="stylesheet" href="/static/css/loader.css">
+  <link rel="stylesheet" href="/static/plugins/toast/css/jquery.toast.min.css">
+  <link rel="stylesheet" href="/static/plugins/pretty-checkbox/pretty-checkbox.min.css">
+  <!--[if lt IE 9]>
+  <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <script src="/static/plugins/jquery/jquery.min.js"></script>
+  <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/static/plugins/bootstrapStyle/bootstrapStyle.css">
+  <link rel="stylesheet" href="/static/plugins/bootstrap-fileinput/css/fileinput.min.css">
+
+  <script type="text/javascript" src="https://cdn.bootcss.com/zTree.v3/3.5.33/js/jquery.ztree.core.js"></script>
+  <script type="text/javascript" src="https://cdn.bootcss.com/zTree.v3/3.5.33/js/jquery.ztree.excheck.js"></script>
+  <script type="text/javascript" src="https://cdn.bootcss.com/zTree.v3/3.5.33/js/jquery.ztree.exedit.js"></script>
+  <script src="/static/plugins/tinymce/tinymce.min.js"></script>
+
+</head>
+<body class="hold-transition sidebar-mini fixed skin-blue">
+<header class="main-header">
+  <a href="/admin" class="logo">
+    <span class="logo-mini"><b>R</b>A</span>
+    <span class="logo-lg">初云博客</span>
+  </a>
+  <nav class="navbar navbar-static-top" role="navigation">
+    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <li><a href="/" title="前往前台"
+               target="_blank"><i class="fa fa-location-arrow"></i></a></li>
+        <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="/static/images/default.png" class="user-image loginUserAvatar" alt="User
+                                Image">
+            <span class="hidden-xs loginUserDisplayName"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="user-header">
+              <img src="/static/images/default.png" class="img-circle loginUserAvatar" alt="User
+                                    Image">
+              <p class="loginUserDisplayName"></p>
+            </li>
+            <li class="user-footer">
+              <div class="pull-left"><a data-pjax="true" href="/admin/user/profile"
+                                        class="btn btn-default "><i
+                      class="fa fa-user"></i>个人资料</a></div>
+              <div class="pull-right"><a href="/logout" class="btn btn-default "><i
+                      class="fa fa-sign-out"></i>登出</a></div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<div class="wrapper">
+  <!-- 菜单栏模块 -->
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="/static/images/default.png" class="img-circle loginUserAvatar"
+               style="width: 45px;height: 45px;" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p class="loginUserDisplayName"></p>
+          <a href="/admin/user/profile"><i
+                  class="fa fa-circle text-success"></i>个人资料</a>
+        </div>
+      </div>
+      <form action="/search" method="get" target="_blank" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="keyword" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+                  <button type="submit" name="keyword" id="search-btn" target="_blank"  class="btn btn-flat">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </span>
+        </div>
+      </form>
+
+      <ul class="sidebar-menu" data-widget="tree"></ul>
+    </section>
+  </aside>
+
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        分类列表
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li>
+          <a data-pjax="true" href="/admin">
+            <i class="fa fa-dashboard"></i> 首页</a>
+        </li>
+        <li><a data-pjax="true" href="/category">分类管理</a></li>
+        <li class="active">分类列表</li>
+      </ol>
+    </section>
+    <section class="content container-fluid">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">添加分类</h3>
+            </div>
+            <form action="/admin/category/save" method="post" role="form" id="cateForm">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="cateName">分类名称</label>
+                  <input type="text" class="form-control" id="cateName" name="cateName"
+                         placeholder="">
+                </div>
+                <div class="form-group">
+                  <label for="cateSort">排序</label>
+                  <input type="number" class="form-control" id="cateSort" name="cateSort" >
+                </div>
+                <div class="form-group">
+                  <label for="cateDesc"
+                         class="control-label">描述</label>
+                  <textarea class="form-control" rows="3" id="cateDesc" name="cateDesc"
+                            style="resize: none"></textarea>
+                </div>
+              </div>
+              <div class="box-footer">
+                <button type="button" class="btn btn-primary btn-sm " onclick="saveCategory()">保存
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-md-7">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">所有分类</h3>
+            </div>
+            <div class="box-body table-responsive">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th class="col-md-3">分类名称</th>
+                  <th class="col-md-6">描述</th>
+                  <th class="col-md-3">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>
+                    <a href="/category/12" target="_blank">程序人生</a>
+                  </td>
+                  <td>分享程序人生的酸甜苦辣</td>
+                  <td>
+                    <a data-pjax="true"
+                       href="/admin/category/edit?id=12&amp;page=1"
+                       class="btn btn-primary btn-xs ">编辑</a>
+                    <button class="btn btn-danger btn-xs delete-category"
+                            onclick="removeIt(12)">删除
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/category/14" target="_blank">算法</a>
+                  </td>
+                  <td>分享数据结构和算法以及应用实践</td>
+                  <td>
+                    <a data-pjax="true"
+                       href="/admin/category/edit?id=14&amp;page=1"
+                       class="btn btn-primary btn-xs ">编辑</a>
+                    <button class="btn btn-danger btn-xs delete-category"
+                            onclick="removeIt(14)">删除
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/category/13" target="_blank">计算机原理</a>
+                  </td>
+                  <td>分享学习计算机原理的成长过程</td>
+                  <td>
+                    <a data-pjax="true"
+                       href="/admin/category/edit?id=13&amp;page=1"
+                       class="btn btn-primary btn-xs ">编辑</a>
+                    <button class="btn btn-danger btn-xs delete-category"
+                            onclick="removeIt(13)">删除
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/category/11" target="_blank">人工智能</a>
+                  </td>
+                  <td>分析AI相关技术：计算机视觉、自然语言翻译、人脸识别、知识图谱</td>
+                  <td>
+                    <a data-pjax="true"
+                       href="/admin/category/edit?id=11&amp;page=1"
+                       class="btn btn-primary btn-xs ">编辑</a>
+                    <button class="btn btn-danger btn-xs delete-category"
+                            onclick="removeIt(11)">删除
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/category/10" target="_blank">大数据</a>
+                  </td>
+                  <td>分享大数据相关技术：数据采集、数据挖掘、数据分析</td>
+                  <td>
+                    <a data-pjax="true"
+                       href="/admin/category/edit?id=10&amp;page=1"
+                       class="btn btn-primary btn-xs ">编辑</a>
+                    <button class="btn btn-danger btn-xs delete-category"
+                            onclick="removeIt(10)">删除
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/category/9" target="_blank">后端开发</a>
+                  </td>
+                  <td>分享后端开发技术：Java、SpringBoot、SpringCloud、分布式、高并发、面向对象</td>
+                  <td>
+                    <a data-pjax="true"
+                       href="/admin/category/edit?id=9&amp;page=1"
+                       class="btn btn-primary btn-xs ">编辑</a>
+                    <button class="btn btn-danger btn-xs delete-category"
+                            onclick="removeIt(9)">删除
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="/category/8" target="_blank">前端开发</a>
+                  </td>
+                  <td>分享前端相关技术：H5,VueJS,React,NodeJS</td>
+                  <td>
+                    <a data-pjax="true"
+                       href="/admin/category/edit?id=8&amp;page=1"
+                       class="btn btn-primary btn-xs ">编辑</a>
+                    <button class="btn btn-danger btn-xs delete-category"
+                            onclick="removeIt(8)">删除
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="box-footer clearfix">
+              <div class="no-margin pull-left">
+                第 1 / 1 页
+              </div>
+              <ul class="pagination no-margin pull-right">
+                <li><a data-pjax="true"  class="btn btn-sm disabled"
+                       href="/admin/category">
+                  首页
+                </a>
+                </li>
+                <li><a data-pjax="true" class="btn btn-sm disabled"  href="/admin/category?page=0">
+                  上一页
+                </a>
+                </li>
+                <li><a data-pjax="true" class="btn btn-sm disabled"  href="/admin/category?page=2">
+                  下一页
+                </a>
+                </li>
+                <li><a data-pjax="true" class="btn btn-sm disabled" href="/admin/category?page=1">
+                  尾页
+                </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+
+            function saveCategory() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/category/save',
+                    async: false,
+                    data: $("#cateForm").serialize(),
+                    success: function (data) {
+                        if (data.code == 0) {
+                            showMsg(data.msg, "error", 1000);
+                        } else {
+                            showMsgAndRedirect(data.msg, "success", 1000, "/admin/category");
+                        }
+                    }
+                });
+            };
+
+            function removeIt(id) {
+                layer.confirm('请确认是否删除', function (index) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/category/delete',
+                        async: false,
+                        data: {
+                            'id': id
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                showMsg(data.msg, "error", 1000);
+                            } else {
+                                showMsgAndRedirect(data.msg, "success", 1000, "/admin/category");
+                            }
+
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+
+        </script>
+  </div>
+
+</div>
+<footer class="main-footer">
+  <div class="pull-right hidden-xs"><a href="#">2020</a></div>
+  Thanks for using <strong><a data-pjax="true" href="#">初云博客</a>.</strong>
+</footer>
+
+<script src="/static/plugins/pjax/jquery.pjax.js"></script>
+<script src="/static/plugins/pace/pace.min.js"></script>
+<script src="/static/js/adminlte.min.js"></script>
+<script src="/static/plugins/toast/js/jquery.toast.min.js"></script>
+<script src="/static/plugins/layer/layer.js"></script>
+<script src="/static/plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="/static/plugins/bootstrap-fileinput/js/locales/zh.js"></script>
+<script src="/static/js/app.js?version=2.0.1"></script>
+<script>
+    Pace.options = {
+        restartOnRequestAfter: false
+    };
+    $(document).ajaxStart(function () {
+        Pace.restart();
+    });
+    $(document).pjax('a[data-pjax=true]', '.content-wrapper', {
+        fragment: '.content-wrapper',
+        timeout: 8000
+    });
+    var heading = "提示";
+</script>
+</body>
+</html>
+

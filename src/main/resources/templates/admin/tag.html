@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>初云博客后台</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/pace/pace.min.css">
+    <link rel="stylesheet" href="/static/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/static/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/static/css/style.css?version=2.0.1">
+    <link rel="stylesheet" href="/static/css/loader.css">
+    <link rel="stylesheet" href="/static/plugins/toast/css/jquery.toast.min.css">
+    <link rel="stylesheet" href="/static/plugins/pretty-checkbox/pretty-checkbox.min.css">
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="/static/plugins/jquery/jquery.min.js"></script>
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/plugins/bootstrapStyle/bootstrapStyle.css">
+    <link rel="stylesheet" href="/static/plugins/bootstrap-fileinput/css/fileinput.min.css">
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/zTree.v3/3.5.33/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/zTree.v3/3.5.33/js/jquery.ztree.excheck.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/zTree.v3/3.5.33/js/jquery.ztree.exedit.js"></script>
+    <script src="/static/plugins/tinymce/tinymce.min.js"></script>
+
+</head>
+<body class="hold-transition sidebar-mini fixed skin-blue">
+<header class="main-header">
+    <a href="/admin" class="logo">
+        <span class="logo-mini"><b>R</b>A</span>
+        <span class="logo-lg">初云博客</span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li><a href="/" title="前往前台"
+                       target="_blank"><i class="fa fa-location-arrow"></i></a></li>
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="/static/images/default.png" class="user-image loginUserAvatar" alt="User
+                                Image">
+                        <span class="hidden-xs loginUserDisplayName"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="user-header">
+                            <img src="/static/images/default.png" class="img-circle loginUserAvatar" alt="User
+                                    Image">
+                            <p class="loginUserDisplayName"></p>
+                        </li>
+                        <li class="user-footer">
+                            <div class="pull-left"><a data-pjax="true" href="/admin/user/profile"
+                                                      class="btn btn-default "><i
+                                    class="fa fa-user"></i>个人资料</a></div>
+                            <div class="pull-right"><a href="/logout" class="btn btn-default "><i
+                                    class="fa fa-sign-out"></i>登出</a></div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="wrapper">
+    <!-- 菜单栏模块 -->
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="/static/images/default.png" class="img-circle loginUserAvatar"
+                         style="width: 45px;height: 45px;" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p class="loginUserDisplayName"></p>
+                    <a href="/admin/user/profile"><i
+                            class="fa fa-circle text-success"></i>个人资料</a>
+                </div>
+            </div>
+            <form action="/search" method="get" target="_blank" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="keyword" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                  <button type="submit" name="keyword" id="search-btn" target="_blank"  class="btn btn-flat">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </span>
+                </div>
+            </form>
+
+            <ul class="sidebar-menu" data-widget="tree"></ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                标签列表
+                <small></small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a data-pjax="true" href="/admin">
+                        <i class="fa fa-dashboard"></i> 首页</a>
+                </li>
+                <li><a data-pjax="true" href="#">标签管理</a></li>
+                <li class="active">标签列表</li>
+            </ol>
+        </section>
+        <section class="content container-fluid">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">添加标签</h3>
+                        </div>
+                        <form action="/admin/tag/save" method="post" role="form" id="tagForm">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="tagName">标签名称</label>
+                                    <input type="text" class="form-control" id="tagName" name="tagName"
+                                           placeholder="">
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                <button type="button" class="btn btn-primary btn-sm " onclick="saveTag()">保存
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">所有标签</h3>
+                        </div>
+                        <div class="box-body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>标签名称</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="/tag/64" target="_blank">测试</a>
+                                    </td>
+                                    <td>
+                                        <a data-pjax="true"
+                                           href="/admin/tag/edit?id=64&amp;page=1"
+                                           class="btn btn-primary btn-xs ">编辑</a>
+                                        <button class="btn btn-danger btn-xs delete-tag"
+                                                onclick="removeIt(64)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/tag/62" target="_blank">Twitter</a>
+                                    </td>
+                                    <td>
+                                        <a data-pjax="true"
+                                           href="/admin/tag/edit?id=62&amp;page=1"
+                                           class="btn btn-primary btn-xs ">编辑</a>
+                                        <button class="btn btn-danger btn-xs delete-tag"
+                                                onclick="removeIt(62)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/tag/61" target="_blank">GPU</a>
+                                    </td>
+                                    <td>
+                                        <a data-pjax="true"
+                                           href="/admin/tag/edit?id=61&amp;page=1"
+                                           class="btn btn-primary btn-xs ">编辑</a>
+                                        <button class="btn btn-danger btn-xs delete-tag"
+                                                onclick="removeIt(61)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/tag/60" target="_blank">CPU</a>
+                                    </td>
+                                    <td>
+                                        <a data-pjax="true"
+                                           href="/admin/tag/edit?id=60&amp;page=1"
+                                           class="btn btn-primary btn-xs ">编辑</a>
+                                        <button class="btn btn-danger btn-xs delete-tag"
+                                                onclick="removeIt(60)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/tag/58" target="_blank">Druid2</a>
+                                    </td>
+                                    <td>
+                                        <a data-pjax="true"
+                                           href="/admin/tag/edit?id=58&amp;page=1"
+                                           class="btn btn-primary btn-xs ">编辑</a>
+                                        <button class="btn btn-danger btn-xs delete-tag"
+                                                onclick="removeIt(58)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/tag/59" target="_blank">推特</a>
+                                    </td>
+                                    <td>
+                                        <a data-pjax="true"
+                                           href="/admin/tag/edit?id=59&amp;page=1"
+                                           class="btn btn-primary btn-xs ">编辑</a>
+                                        <button class="btn btn-danger btn-xs delete-tag"
+                                                onclick="removeIt(59)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/tag/56" target="_blank">腾讯</a>
+                                    </td>
+                                    <td>
+                                        <a data-pjax="true"
+                                           href="/admin/tag/edit?id=56&amp;page=1"
+                                           class="btn btn-primary btn-xs ">编辑</a>
+                                        <button class="btn btn-danger btn-xs delete-tag"
+                                                onclick="removeIt(56)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/tag/57" target="_blank">开源</a>
+                                    </td>
+                                    <td>
+                                        <a data-pjax="true"
+                                           href="/admin/tag/edit?id=57&amp;page=1"
+                                           class="btn btn-primary btn-xs ">编辑</a>
+                                        <button class="btn btn-danger btn-xs delete-tag"
+                                                onclick="removeIt(57)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/tag/54" target="_blank">机器学习</a>
+                                    </td>
+                                    <td>
+                                        <a data-pjax="true"
+                                           href="/admin/tag/edit?id=54&amp;page=1"
+                                           class="btn btn-primary btn-xs ">编辑</a>
+                                        <button class="btn btn-danger btn-xs delete-tag"
+                                                onclick="removeIt(54)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="/tag/55" target="_blank">TensorFlow</a>
+                                    </td>
+                                    <td>
+                                        <a data-pjax="true"
+                                           href="/admin/tag/edit?id=55&amp;page=1"
+                                           class="btn btn-primary btn-xs ">编辑</a>
+                                        <button class="btn btn-danger btn-xs delete-tag"
+                                                onclick="removeIt(55)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix">
+                            <div class="no-margin pull-left">
+                                第 1 / 3 页
+                            </div>
+                            <ul class="pagination no-margin pull-right">
+                                <li><a data-pjax="true"  class="btn btn-sm disabled"
+                                       href="/admin/tag">
+                                    首页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm disabled"  href="/admin/tag?page=0">
+                                    上一页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm"  href="/admin/tag?page=2">
+                                    下一页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm" href="/admin/tag?page=3">
+                                    尾页
+                                </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+
+            function saveTag() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/tag/save',
+                    async: false,
+                    data: $("#tagForm").serialize(),
+                    success: function (data) {
+                        if (data.code == 0) {
+                            showMsg(data.msg, "error", 1000);
+                        } else {
+                            showMsgAndRedirect(data.msg, "success", 1000, "/admin/tag");
+                        }
+                    }
+                });
+            };
+
+            function removeIt(id) {
+                layer.confirm('请确认是否删除', function (index) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/tag/delete',
+                        async: false,
+                        data: {
+                            'id': id
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                showMsg(data.msg, "error", 1000);
+                            } else {
+                                showMsgAndRedirect(data.msg, "success", 1000, "/admin/tag");
+                            }
+
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+
+        </script>
+    </div>
+
+</div>
+<footer class="main-footer">
+    <div class="pull-right hidden-xs"><a href="#">2020</a></div>
+    Thanks for using <strong><a data-pjax="true" href="#">初云博客</a>.</strong>
+</footer>
+
+<script src="/static/plugins/pjax/jquery.pjax.js"></script>
+<script src="/static/plugins/pace/pace.min.js"></script>
+<script src="/static/js/adminlte.min.js"></script>
+<script src="/static/plugins/toast/js/jquery.toast.min.js"></script>
+<script src="/static/plugins/layer/layer.js"></script>
+<script src="/static/plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="/static/plugins/bootstrap-fileinput/js/locales/zh.js"></script>
+<script src="/static/js/app.js?version=2.0.1"></script>
+<script>
+    Pace.options = {
+        restartOnRequestAfter: false
+    };
+    $(document).ajaxStart(function () {
+        Pace.restart();
+    });
+    $(document).pjax('a[data-pjax=true]', '.content-wrapper', {
+        fragment: '.content-wrapper',
+        timeout: 8000
+    });
+    var heading = "提示";
+</script>
+</body>
+</html>
+

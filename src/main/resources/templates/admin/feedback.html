@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>初云博客后台</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/pace/pace.min.css">
+    <link rel="stylesheet" href="/static/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/static/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/static/css/style.css?version=2.0.1">
+    <link rel="stylesheet" href="/static/css/loader.css">
+    <link rel="stylesheet" href="/static/plugins/toast/css/jquery.toast.min.css">
+    <link rel="stylesheet" href="/static/plugins/pretty-checkbox/pretty-checkbox.min.css">
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="/static/plugins/jquery/jquery.min.js"></script>
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/plugins/bootstrapStyle/bootstrapStyle.css">
+    <link rel="stylesheet" href="/static/plugins/bootstrap-fileinput/css/fileinput.min.css">
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/zTree.v3/3.5.33/js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/zTree.v3/3.5.33/js/jquery.ztree.excheck.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/zTree.v3/3.5.33/js/jquery.ztree.exedit.js"></script>
+    <script src="/static/plugins/tinymce/tinymce.min.js"></script>
+
+</head>
+<body class="hold-transition sidebar-mini fixed skin-blue">
+<header class="main-header">
+    <a href="/admin" class="logo">
+        <span class="logo-mini"><b>R</b>A</span>
+        <span class="logo-lg">初云博客</span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li><a href="/" title="前往前台"
+                       target="_blank"><i class="fa fa-location-arrow"></i></a></li>
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="/static/images/default.png" class="user-image loginUserAvatar" alt="User
+                                Image">
+                        <span class="hidden-xs loginUserDisplayName"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="user-header">
+                            <img src="/static/images/default.png" class="img-circle loginUserAvatar" alt="User
+                                    Image">
+                            <p class="loginUserDisplayName"></p>
+                        </li>
+                        <li class="user-footer">
+                            <div class="pull-left"><a data-pjax="true" href="/admin/user/profile"
+                                                      class="btn btn-default "><i
+                                    class="fa fa-user"></i>个人资料</a></div>
+                            <div class="pull-right"><a href="/logout" class="btn btn-default "><i
+                                    class="fa fa-sign-out"></i>登出</a></div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+<div class="wrapper">
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="/static/images/default.png" class="img-circle loginUserAvatar"
+                         style="width: 45px;height: 45px;" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p class="loginUserDisplayName"></p>
+                    <a href="/admin/user/profile"><i
+                            class="fa fa-circle text-success"></i>个人资料</a>
+                </div>
+            </div>
+            <form action="/search" method="get" target="_blank" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="keyword" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                  <button type="submit" name="keyword" id="search-btn" target="_blank"  class="btn btn-flat">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </span>
+                </div>
+            </form>
+
+            <ul class="sidebar-menu" data-widget="tree"></ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper">
+        <style type="text/css" rel="stylesheet">
+            .role-ul > li {
+                list-style: none;
+                float: left;
+                margin: 0;
+                padding-bottom: 10px
+            }
+        </style>
+        <section class="content-header">
+            <h1 style="display: inline-block;">用户反馈管理</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a data-pjax="true" href="/admin">
+                        <i class="fa fa-dashboard"></i> 首页</a>
+                </li>
+                <li><a data-pjax="true" href="#">用户反馈管理</a></li>
+                <li class="active">用户反馈列表</li>
+            </ol>
+        </section>
+        <section class="content container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="col-md-4 col-xs-12" style="margin-bottom: 10px;padding-left: 0;">
+                        <button type="button" class="btn btn-danger">
+                            <i class="fa fa-remove"></i> 批量删除
+                        </button>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-body table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="allSelect" onclick="doCheck()"></th>
+                                    <th>用户名</th>
+                                    <th class="col-md-3">文章</th>
+                                    <th class="col-md-2">反馈内容</th>
+                                    <th class="col-md-2">处理结果</th>
+                                    <th>状态</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr id="report-19">
+                                    <td><input type="checkbox" name="ids" value="19"></td>
+                                    <td>
+                                        <a href="/admin/user/edit?id=2" target="_blank">mayun</a>
+                                    </td>
+                                    <td>
+                                        <a href="/post/22" target="_blank">腾讯首次公布研发大数据：研发人员占比 66%，C++ 是最常用语言</a>
+                                    </td>
+                                    <td>z222</td>
+                                    <td></td>
+                                    <td>
+                                        <span class="text-danger">待处理</span>
+
+                                    </td>
+                                    <td>2021-02-26 14:44</td>
+                                    <td>
+                                        <a href="javascript:void(0)" class="btn btn-info btn-xs "
+                                           onclick="handlerIt(19)">处理</a>
+                                        <a href="javascript:void(0)" onclick="removeIt(19)"
+                                           class="btn btn-danger btn-xs ">删除</a>
+                                    </td>
+                                </tr>
+                                <tr id="report-18">
+                                    <td><input type="checkbox" name="ids" value="18"></td>
+                                    <td>
+                                        <a href="/admin/user/edit?id=2" target="_blank">mayun</a>
+                                    </td>
+                                    <td>
+                                        <a href="/post/22" target="_blank">腾讯首次公布研发大数据：研发人员占比 66%，C++ 是最常用语言</a>
+                                    </td>
+                                    <td>z222</td>
+                                    <td>OK！</td>
+                                    <td>
+
+                                        <span class="text-success">已处理</span>
+                                    </td>
+                                    <td>2021-02-26 14:44</td>
+                                    <td>
+                                        <a href="javascript:void(0)" class="btn btn-info btn-xs "
+                                           onclick="handlerIt(18)">处理</a>
+                                        <a href="javascript:void(0)" onclick="removeIt(18)"
+                                           class="btn btn-danger btn-xs ">删除</a>
+                                    </td>
+                                </tr>
+                                <tr id="report-17">
+                                    <td><input type="checkbox" name="ids" value="17"></td>
+                                    <td>
+                                        <a href="/admin/user/edit?id=2" target="_blank">mayun</a>
+                                    </td>
+                                    <td>
+                                        <a href="/post/22" target="_blank">腾讯首次公布研发大数据：研发人员占比 66%，C++ 是最常用语言</a>
+                                    </td>
+                                    <td>z222</td>
+                                    <td></td>
+                                    <td>
+                                        <span class="text-danger">待处理</span>
+
+                                    </td>
+                                    <td>2021-02-26 14:44</td>
+                                    <td>
+                                        <a href="javascript:void(0)" class="btn btn-info btn-xs "
+                                           onclick="handlerIt(17)">处理</a>
+                                        <a href="javascript:void(0)" onclick="removeIt(17)"
+                                           class="btn btn-danger btn-xs ">删除</a>
+                                    </td>
+                                </tr>
+                                <tr id="report-1">
+                                    <td><input type="checkbox" name="ids" value="1"></td>
+                                    <td>
+                                        <a href="/admin/user/edit?id=3" target="_blank">zhangsan</a>
+                                    </td>
+                                    <td>
+                                        <a href="/post/23" target="_blank">Twitter 如何应用 Druid 分析 ZB 级实时数据？</a>
+                                    </td>
+                                    <td>是是是</td>
+                                    <td>2222222</td>
+                                    <td>
+
+                                        <span class="text-success">已处理</span>
+                                    </td>
+                                    <td>2021-02-21 18:15</td>
+                                    <td>
+                                        <a href="javascript:void(0)" class="btn btn-info btn-xs "
+                                           onclick="handlerIt(1)">处理</a>
+                                        <a href="javascript:void(0)" onclick="removeIt(1)"
+                                           class="btn btn-danger btn-xs ">删除</a>
+                                    </td>
+                                </tr>
+                                <tr id="report-2">
+                                    <td><input type="checkbox" name="ids" value="2"></td>
+                                    <td>
+                                        <a href="/admin/user/edit?id=3" target="_blank">zhangsan</a>
+                                    </td>
+                                    <td>
+                                        <a href="/post/23" target="_blank">Twitter 如何应用 Druid 分析 ZB 级实时数据？</a>
+                                    </td>
+                                    <td>是是是</td>
+                                    <td>swsww</td>
+                                    <td>
+
+                                        <span class="text-success">已处理</span>
+                                    </td>
+                                    <td>2021-02-21 18:15</td>
+                                    <td>
+                                        <a href="javascript:void(0)" class="btn btn-info btn-xs "
+                                           onclick="handlerIt(2)">处理</a>
+                                        <a href="javascript:void(0)" onclick="removeIt(2)"
+                                           class="btn btn-danger btn-xs ">删除</a>
+                                    </td>
+                                </tr>
+                                <tr id="report-3">
+                                    <td><input type="checkbox" name="ids" value="3"></td>
+                                    <td>
+                                        <a href="/admin/user/edit?id=3" target="_blank">zhangsan</a>
+                                    </td>
+                                    <td>
+                                        <a href="/post/23" target="_blank">Twitter 如何应用 Druid 分析 ZB 级实时数据？</a>
+                                    </td>
+                                    <td>是是是</td>
+                                    <td></td>
+                                    <td>
+                                        <span class="text-danger">待处理</span>
+
+                                    </td>
+                                    <td>2021-02-21 18:15</td>
+                                    <td>
+                                        <a href="javascript:void(0)" class="btn btn-info btn-xs "
+                                           onclick="handlerIt(3)">处理</a>
+                                        <a href="javascript:void(0)" onclick="removeIt(3)"
+                                           class="btn btn-danger btn-xs ">删除</a>
+                                    </td>
+                                </tr>
+                                <tr id="report-16">
+                                    <td><input type="checkbox" name="ids" value="16"></td>
+                                    <td>
+                                        <a href="/admin/user/edit?id=3" target="_blank">zhangsan</a>
+                                    </td>
+                                    <td>
+                                        <a href="/post/23" target="_blank">Twitter 如何应用 Druid 分析 ZB 级实时数据？</a>
+                                    </td>
+                                    <td>是是是</td>
+                                    <td></td>
+                                    <td>
+                                        <span class="text-danger">待处理</span>
+
+                                    </td>
+                                    <td>2021-02-21 18:15</td>
+                                    <td>
+                                        <a href="javascript:void(0)" class="btn btn-info btn-xs "
+                                           onclick="handlerIt(16)">处理</a>
+                                        <a href="javascript:void(0)" onclick="removeIt(16)"
+                                           class="btn btn-danger btn-xs ">删除</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer clearfix">
+                            <div class="no-margin pull-left">
+                                第 1 / 1 页
+                            </div>
+                            <ul class="pagination no-margin pull-right">
+                                <li><a data-pjax="true" class="btn btn-sm disabled"
+                                       href="/admin/report?page=1">
+                                    首页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm disabled"
+                                       href="/admin/report?page=0">
+                                    上一页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm disabled"
+                                       href="/admin/report?page=2">
+                                    下一页
+                                </a>
+                                </li>
+                                <li><a data-pjax="true" class="btn btn-sm disabled"
+                                       href="/admin/report?page=1">
+                                    尾页
+                                </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="reportModal">
+                <div class="modal-dialog">
+                    <div class="modal-content message_align">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">反馈处理</h4>
+                        </div>
+                        <div class="modal-body" style="height: 150px;">
+                            <div class="form-group">
+                                <label for="remark"
+                                       class="col-md-2 control-label">回复
+                                </label>
+                                <div class="col-md-10" style="margin-bottom: 10px;">
+                                    <textarea class="form-control" rows="3" id="remark" name="remark"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">状态</label>
+                                <div class="col-md-10 control-radio">
+                                    <div class="pretty p-default p-round">
+                                        <input type="radio" name="status"
+                                               value="0">
+                                        <div class="state p-primary">
+                                            <label>待处理</label>
+                                        </div>
+                                    </div>
+                                    <div class="pretty p-default p-round">
+                                        <input type="radio" name="status"
+                                               value="1">
+                                        <div class="state p-primary">
+                                            <label>已处理</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" id="id" name="id" value=""/>
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">取消
+                            </button>
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    onclick="saveReport()">确定
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+
+            function removeIt(id) {
+                layer.confirm("你确定是否删除？", function (index) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/report/delete',
+                        async: false,
+                        data: {
+                            'id': id
+                        },
+                        success: function (data) {
+                            if (data.code == 0) {
+                                showMsg(data.msg, "error", 1000);
+                            } else {
+                                showMsg(data.msg, "success", 2000);
+                                $('#report-' + id).remove();
+                            }
+
+                        }
+                    });
+                    layer.close(index);
+                });
+            }
+
+            function handlerIt(id) {
+                $('#reportModal').modal();
+                $.ajax({
+                    type: 'GET',
+                    url: '/admin/report/detail',
+                    async: false,
+                    data: {
+                        'id': id
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            showMsg(data.msg, "error", 1000);
+                        } else {
+                            $('#id').val(data.result.id);
+                            $('#remark').val(data.result.remark);
+                            $("input[name='status'][value='" + data.result.status + "']").attr("checked", true);
+                        }
+
+                    }
+                });
+            }
+
+            function saveReport() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/report/save',
+                    async: false,
+                    data: {
+                        'id': $('#id').val(),
+                        'remark': $('#remark').val(),
+                        'status': $("input[name='status']:checked").val()
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            showMsg(data.msg, "error", 1000);
+                        } else {
+                            showMsgAndReload(data.msg, "success", 1000);
+                        }
+                    }
+                });
+            }
+
+            function batchDelete() {
+                var arr = [];
+                $('input[name="ids"]:checked').each(function () {
+                    arr.push($(this).val());
+                });
+                if (arr.length <= 0) {
+                    showMsg('请选择要删除的记录', "error", 1000);
+                } else {
+                    layer.confirm('你确定是否删除?', function (index) {
+                        $.ajax({
+                            url: "/admin/report/batchDelete?ids=" + arr,
+                            type: "POST",
+                            success: function (data) {
+                                if (data.code == 0) {
+                                    showMsg(data.msg, "error", 1000);
+                                } else {
+                                    showMsgAndReload(data.msg, "success", 2000);
+                                }
+                            }
+                        });
+                        layer.close(index);
+                    });
+                }
+            }
+
+        </script>
+    </div>
+</div>
+<footer class="main-footer">
+    <div class="pull-right hidden-xs"><a href="#">2020</a></div>
+    Thanks for using <strong><a data-pjax="true" href="#">初云博客</a>.</strong>
+</footer>
+
+<script src="/static/plugins/pjax/jquery.pjax.js"></script>
+<script src="/static/plugins/pace/pace.min.js"></script>
+<script src="/static/js/adminlte.min.js"></script>
+<script src="/static/plugins/toast/js/jquery.toast.min.js"></script>
+<script src="/static/plugins/layer/layer.js"></script>
+<script src="/static/plugins/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="/static/plugins/bootstrap-fileinput/js/locales/zh.js"></script>
+<script src="/static/js/app.js?version=2.0.1"></script>
+<script>
+    Pace.options = {
+        restartOnRequestAfter: false
+    };
+    $(document).ajaxStart(function () {
+        Pace.restart();
+    });
+    $(document).pjax('a[data-pjax=true]', '.content-wrapper', {
+        fragment: '.content-wrapper',
+        timeout: 8000
+    });
+    var heading = "提示";
+</script>
+</body>
+</html>
+
+
