@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import priv.gsc.guiforum.annotation.LoginRequired;
 import priv.gsc.guiforum.service.UserService;
 import priv.gsc.guiforum.util.GuiForumEnum;
 import priv.gsc.guiforum.util.JsonResult;
@@ -38,7 +39,6 @@ public class RegisterController {
     private String contextPath;
 
     private GuiForumEnum.ACTIVATION activationEnum;
-
 
 
     @GetMapping("/register")
@@ -113,5 +113,11 @@ public class RegisterController {
         return JsonResult.error("其他错误");
     }
 
+//    @LoginRequired
+//    @GetMapping("/test")
+//    @ResponseBody
+//    public String test() {
+//        return "test 一下";
+//    }
 
 }
