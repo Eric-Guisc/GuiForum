@@ -32,7 +32,7 @@
         <div class="mm-backbtn">Back</div>
     </div>
 </nav>
-<header id="tt-header">
+<header id="tt-header" th:fragment="header">
     <div class="container">
         <div class="row tt-row no-gutters">
             <div class="col-auto">
@@ -110,13 +110,13 @@
             </div>
             <div class="col-auto ml-auto">
 
-                <div class="tt-account-btn">
+                <div class="tt-account-btn" th:if="${loginUser==null}">
                     <a th:href="@{/login}" class="btn btn-primary">登录</a>
                     <a th:href="@{/register}" class="btn btn-secondary">注册</a>
                 </div>
 
-                <div class="tt-user-info d-flex justify-content-center">
-                    <a th:href="@{/logout}" class="btn btn-primary">退出</a>
+                <div class="tt-user-info d-flex justify-content-center" th:if="${loginUser!=null}">
+                    <a th:href="@{/logout}" class="btn btn-primary">注销</a>
                     <a th:href="@{/admin}" class="btn btn-secondary">后台</a>
                 </div>
                 　

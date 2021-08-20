@@ -139,4 +139,5 @@ public class UserService {
     public void logout(String ticket) {
         loginTicketMapper.updateValidStatus(ticket, 1);
     }
+
 }
