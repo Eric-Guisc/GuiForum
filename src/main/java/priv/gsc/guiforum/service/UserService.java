@@ -68,7 +68,7 @@ public class UserService {
         user.setEmail(email);
         user.setSalt(GuiForumUtils.generateUUID().substring(0, 5));
         user.setPassword(GuiForumUtils.md5(password + user.getSalt()));
-        user.setAvatar(String.format("/images/avatar/%d.jpeg", new Random().nextInt(40)+1));
+        user.setAvatar(contextPath + String.format("/images/avatar/%d.jpeg", new Random().nextInt(40)+1));
         user.setType(0);            // 普通用户
         user.setActivationStatus(0);// 未激活
         user.setActivationCode(GuiForumUtils.generateUUID());

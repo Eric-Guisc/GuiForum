@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<footer class="main-footer" th:fragment="footer">
+    <div class="pull-right hidden-xs"><a href="#">2021</a></div>
+    Thanks for using
+    <strong><a data-pjax="true" href="#">GuiForum</a>.</strong>
+    <script th:src="@{/plugins/pjax/jquery.pjax.js}"></script>
+    <script th:src="@{/plugins/pace/pace.min.js}"></script>
+    <script th:src="@{/js/adminlte.min.js}"></script>
+    <script th:src="@{/plugins/toast/js/jquery.toast.min.js}"></script>
+    <script th:src="@{/plugins/layer/layer.js}"></script>
+    <script th:src="@{/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>
+    <script th:src="@{/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>
+    <script th:src="@{/js/app.js?version=2.0.1}"></script>
+    <script>
+        Pace.options = {
+            restartOnRequestAfter: false
+        };
+        $(document).ajaxStart(function () {
+            Pace.restart();
+        });
+        $(document).pjax('a[data-pjax=true]', '.content-wrapper', {
+            fragment: '.content-wrapper',
+            timeout: 8000
+        });
+        var heading = "提示";
+    </script>
+</footer>
+

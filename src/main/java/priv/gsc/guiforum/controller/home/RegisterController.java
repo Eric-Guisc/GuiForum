@@ -1,4 +1,4 @@
-package priv.gsc.guiforum.controller;
+package priv.gsc.guiforum.controller.home;
 
 import com.google.code.kaptcha.Producer;
 import org.apache.commons.lang3.StringUtils;
@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import priv.gsc.guiforum.annotation.LoginRequired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import priv.gsc.guiforum.service.UserService;
 import priv.gsc.guiforum.util.GuiForumEnum;
 import priv.gsc.guiforum.util.JsonResult;

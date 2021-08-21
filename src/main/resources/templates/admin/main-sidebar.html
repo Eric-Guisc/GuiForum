@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- 菜单栏模块 -->
+<aside class="main-sidebar" th:fragment="sidebar(path)">
+    <section class="sidebar">
+        <!-- user information -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img th:src="${loginUser.avatar}" class="img-circle loginUserAvatar" style="width: 45px;height: 45px;" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p class="loginUserDisplayName" th:text="${loginUser.username}">管理员</p>
+                <a th:href="@{/admin/user/profile}"><i class="fa fa-circle text-success"></i>个人资料</a>
+            </div>
+        </div>
+
+        <!-- search -->
+        <form th:action="@{/admin/search}" method="get" target="_blank" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="keyword" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                  <button type="submit" name="keyword" id="search-btn" target="_blank" class="btn btn-flat">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </span>
+            </div>
+        </form>
+
+        <!-- 左侧菜单栏 -->
+        <ul class="sidebar-menu tree" data-widget="tree">
+            <li class="header">HEADER</li>
+            <li th:class="${path}=='index' ? 'active' : ''">
+                <a data-pjax="true" th:href="@{/admin}"><i class="fa fa-dashboard"></i><span>首页</span></a>
+            </li>
+            <li th:class="|treeview ${path}=='post' ? 'active' : ''|">
+                <a data-pjax="true" href="/admin/post"><i class="fa fa-paint-brush"></i><span>文章管理</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a data-pjax="true" href="/admin/post"><i class="fa fa-circle-o"></i>文章列表</a>
+                    </li>
+                    <li>
+                        <a data-pjax="true" href="/admin/post/new"><i class="fa fa-circle-o"></i>发布文章</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a data-pjax="true" href="/admin/category"><i class="fa fa-book"></i><span>分类管理</span></a>
+            </li>
+            <li>
+                <a data-pjax="true" href="/admin/tag"><i class="fa fa-tag"></i><span>标签管理</span></a>
+            </li>
+            <li class="treeview">
+                <a data-pjax="true" href="/admin/comment"><i class="fa fa-comment"></i><span>评论管理</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a data-pjax="true" href="/admin/comment"><i class="fa fa-circle-o"></i>所有评论</a>
+                    </li>
+                    <li>
+                        <a data-pjax="true" href="/admin/comment/send"><i class="fa fa-circle-o"></i>我的评论</a>
+                    </li>
+                    <li>
+                        <a data-pjax="true" href="/admin/comment/receive"><i class="fa fa-circle-o"></i>回复我的</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a data-pjax="true" href="/admin/report"><i class="fa fa-warning"></i><span>反馈管理</span></a>
+            </li>
+            <li>
+                <a data-pjax="true" href="/admin/photoCategory"><i class="fa fa-picture-o"></i><span>相册管理</span></a>
+            </li>
+            <li>
+                <a data-pjax="true" href="/admin/notice"><i class="fa fa-volume-up"></i><span>公告管理</span></a>
+            </li>
+            <li class="treeview">
+                <a data-pjax="true" href="/admin/user"><i class="fa fa-user"></i><span>用户管理</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a data-pjax="true" href="/admin/user"><i class="fa fa-circle-o"></i>用户列表</a>
+                    </li>
+                    <li>
+                        <a data-pjax="true" href="/admin/user/new"><i class="fa fa-circle-o"></i>添加用户</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a data-pjax="true" href="/admin/role"><i class="fa fa-snowflake-o"></i><span>角色管理</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a data-pjax="true" href="/admin/role"><i class="fa fa-circle-o"></i>角色列表</a>
+                    </li>
+                    <li>
+                        <a data-pjax="true" href="/admin/role/new"><i class="fa fa-circle-o"></i>添加角色</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a data-pjax="true" href="/admin/permission"><i class="fa fa-podcast"></i><span>权限管理</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a data-pjax="true" href="/admin/permission"><i class="fa fa-circle-o"></i>权限列表</a>
+                    </li>
+                    <li>
+                        <a data-pjax="true" href="/admin/permission/new"><i class="fa fa-circle-o"></i>添加权限</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</aside>

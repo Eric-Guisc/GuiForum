@@ -1,13 +1,11 @@
-package priv.gsc.guiforum.controller;
+package priv.gsc.guiforum.controller.home;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import priv.gsc.guiforum.dao.PostTagMapper;
 import priv.gsc.guiforum.entity.Page;
 import priv.gsc.guiforum.entity.Post;
-import priv.gsc.guiforum.entity.Tag;
 import priv.gsc.guiforum.service.*;
 import priv.gsc.guiforum.util.GuiForumUtils;
 

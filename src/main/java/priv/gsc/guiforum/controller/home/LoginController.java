@@ -1,4 +1,4 @@
-package priv.gsc.guiforum.controller;
+package priv.gsc.guiforum.controller.home;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
