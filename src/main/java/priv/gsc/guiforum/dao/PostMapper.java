@@ -19,4 +19,6 @@ public interface PostMapper {
     // 如果只有一个参数，并且在<if>里使用，则必须加别名
     // 查询某用户的帖子总条数或所有用户帖子总条数
     int selectPostRows(@Param("userId") int userId);
+
+    Post selectPostById(int id);
 }

@@ -47,17 +47,17 @@
                 <!-- /toggle mobile menu -->
                 <!-- logo -->
                 <div class="tt-logo">
-                    <a href="/">
+                    <a th:href="@{/index}">
                         <!--                                <img src="/static/images/logo.PNG" alt="" style="width:auto;height: 45px;">-->
                     </a>
-                    <a href="/"><strong>GuiForum</strong></a>
+                    <a th:href="@{/index}"><strong>GuiForum</strong></a>
                 </div>
                 <!-- /logo -->
                 <!-- desctop menu -->
                 <div class="tt-desktop-menu">
                     <nav>
                         <ul>
-                            <li th:classappend="${n==1} ? 'active'"><a href="/post"><span>文章</span></a></li>
+                            <li th:classappend="${n==1} ? 'active'"><a th:href="@{/index}"><span>文章</span></a></li>
                             <li th:classappend="${n==2} ? 'active'"><a href="/user"><span>用户</span></a></li>
                             <li th:classappend="${n==3} ? 'active'"><a href="/category"><span>分类</span></a></li>
                             <li th:classappend="${n==4} ? 'active'"><a href="/tag"><span>标签</span></a></li>

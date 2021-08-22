@@ -36,4 +36,10 @@
             and user_id = #{userId}
         </if>
     </select>
+
+    <select id="selectPostById" resultType="Post">
+        select <include refid="selectFields"></include>
+        from post
+        where id = #{id}
+    </select>
 </mapper>

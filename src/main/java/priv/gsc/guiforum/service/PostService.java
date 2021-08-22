@@ -27,4 +27,9 @@ public class PostService {
         int count = postMapper.insertPost(post);
         return count;
     }
+
+    public Post findPostById(int id) {
+        Post post = postMapper.selectPostById(id);
+        return post;
+    }
 }

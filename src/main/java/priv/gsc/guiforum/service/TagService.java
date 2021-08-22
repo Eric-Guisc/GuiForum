@@ -31,7 +31,7 @@ public class TagService {
     }
 
     public List<Integer> addTagsByString(String strings) {
-        String[] tags = strings.split(",");
+        String[] tags = strings.split("，");
         List<Integer> res = new ArrayList<>();
         if (tags != null) {
             for (String tag : tags) {

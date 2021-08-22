@@ -19,6 +19,7 @@
 <nav class="panel-menu" id="mobile-menu" th:replace="home/fragment::mobile-menu">
 </nav>
 
+<!-- header -->
 <header id="tt-header" th:replace="home/fragment::header(1)">
 </header>
 
@@ -42,19 +43,23 @@
                         </div>
                         <div id="tt-item-wrapper">
                             <div class="tt-item" th:each="item:${postVO}">
+                                <!-- 作者 -->
                                 <div class="tt-col-avatar">
                                     <a href="/user/9">
                                         <img th:src="${item.user.avatar}" class="avatar" th:alt="${item.user.username}">
                                     </a>
                                 </div>
+
                                 <div class="tt-col-description">
+                                    <!-- 帖子 -->
                                     <h6 class="tt-title">
-                                        <a href="/post/23">
+                                        <a th:href="@{|/post/${item.post.id}|}">
                                             <span class="font-success" th:if="${item.post.type==1}">【置顶】</span>
                                             <span class="font-warning"
                                                   th:if="${item.post.recommendStatus==1}">【推荐】</span>
                                             <span th:utext="${item.post.title}">Twitter 如何应用 Druid 分析 ZB 级实时数据？</span>
-                                        </a></h6>
+                                        </a>
+                                    </h6>
                                     <div class="row align-items-center no-gutters">
                                         <div class="col-11">
                                             <ul class="tt-list-badge" th:if="${item.tags != null}">
@@ -73,11 +78,11 @@
                                 <div class="tt-col-category"><a href="/category/9"><span
                                         class="tt-color03 tt-badge" th:text="${item.category.name}">后端开发1</span></a>
                                 </div>
-                                <div class="tt-col-value  hide-mobile">1</div>
-                                <div class="tt-col-value tt-color-select  hide-mobile"
+                                <div class="tt-col-value hide-mobile">1</div>
+                                <div class="tt-col-value hide-mobile"
                                      th:text="${item.post.commentCount}">3
                                 </div>
-                                <div class="tt-col-value  hide-mobile">26</div>
+                                <div class="tt-col-value hide-mobile">26</div>
                                 <div class="tt-col-value hide-mobile" th:text="${item.time}" style="font-size: 14px">
                                     5月前
                                 </div>
