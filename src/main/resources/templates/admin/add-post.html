@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 引入head -->
+<head th:replace="admin/fragment::head"></head>
+
+<body class="hold-transition sidebar-mini fixed skin-blue">
+
+<!-- 顶部菜单栏 -->
+<header th:replace="admin/fragment::main-header"></header>
+
+<div class="wrapper">
+    <!-- 左侧菜单栏 -->
+    <aside th:replace="admin/fragment::sidebar(2)"></aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <style type="text/css">
+            #title {
+                font-weight: 400;
+                border-radius: 0;
+            }
+
+            #cateId option {
+                border-radius: 0;
+            }
+
+            #tags {
+                border-radius: 0;
+            }
+
+            .form-horizontal .control-label {
+                text-align: left;
+            }
+
+            .editor-preview-active img, .editor-preview-active-side img {
+                width: 100%;
+            }
+
+            .fr-toolbar {
+                border-top: 1px solid #ccc !important;
+            }
+
+            .fr-wrapper > div[style*='z-index: 9999'] {
+                position: absolute;
+                top: -10000px;
+                opacity: 0;
+                height: 0;
+            }
+        </style>
+        <section class="content-header">
+            <h1 style="display: inline-block;">文章发布</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a data-pjax="true" th:href="@{/admin}"><i class="fa fa-dashboard"></i> 首页</a>
+                </li>
+                <li>
+                    <a data-pjax="true" href="#">文章管理</a>
+                </li>
+                <li class="active">文章发布</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="box box-primary">
+                        <!-- form start -->
+                        <form role="form">
+                            <div class="box-body">
+                                <!-- 标题 -->
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" id="title" placeholder="请输入标题">
+                                </div>
+                                <!-- 帖子内容 -->
+                                <textarea id="postContent"></textarea>
+                                <br>
+                                <!-- 分类 -->
+                                <div class="form-group">
+                                    <select class="form-control input-lg" id="categoryId">
+                                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">开发</option>
+                                    </select>
+                                </div>
+                                <!-- 标签 -->
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" id="tags" placeholder="请输入标签,逗号分隔">
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+
+                            <div class="box-footer">
+                                <button type="button" class="btn btn-primary" onclick="push()">发布</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <script>
+            tinymce.init({
+                selector: '#postContent',
+                language: "zh_CN",
+                height: 600,
+                theme: "silver",
+                browser_spellcheck: true, // 拼写检查
+                branding: true, // 去水印
+                // elementpath: false,  //禁用编辑器底部的状态栏
+                statusbar: false, // 隐藏编辑器底部的状态栏
+                paste_data_images: true, // 允许粘贴图像
+                menubar: true, // 隐藏最上方menu
+                fontsize_formats:
+                    "12px 13px 14px 15px 16px 17px 18px 20px 22px 24px 26px 30px 35px 40px 50px",
+                plugins:
+                    "print preview fullpage searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount  imagetools  contextmenu colorpicker textpattern help code",
+                toolbar:
+                    "formatselect | bold italic strikethrough forecolor backcolor fontsizeselect | link image  | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat| code",
+                paste_webkit_styles: true,
+                images_upload_url: '/admin/file/upload', //  图片上传地址
+                contextmenu: `inserttable | cell row column deletetable`,
+                relative_urls: false,
+                remove_script_host: false
+            });
+        </script>
+
+    </div>
+
+</div>
+
+<!-- 底部 -->
+<div th:replace="admin/fragment::footer"></div>
+
+<!--/*/<th:block th:replace="admin/fragment :: script">/*/-->
+<!--/*/</th:block>/*/-->
+
+</body>
+</html>

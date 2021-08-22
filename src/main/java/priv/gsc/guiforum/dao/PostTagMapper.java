@@ -13,4 +13,7 @@ public interface PostTagMapper {
 
     // 根据帖子ID查询所有对应的标签ID
     List<Integer> selectTagIdsByPostId(int postId);
+
+    // 根据帖子Id和标签Id新增关系
+    int insertPostTags(int postId, int tagId);
 }

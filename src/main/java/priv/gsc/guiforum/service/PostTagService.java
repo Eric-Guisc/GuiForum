@@ -17,4 +17,10 @@ public class PostTagService {
         List<Integer> tagIds = postTagMapper.selectTagIdsByPostId(postId);
         return tagIds;
     }
+
+    public void addPostTags(int postId, List<Integer> tagIds) {
+        for (Integer tagId : tagIds) {
+            postTagMapper.insertPostTags(postId, tagId);
+        }
+    }
 }

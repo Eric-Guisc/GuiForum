@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <!-- 引入head-->
-<head th:replace="admin/header::head">
+<head th:replace="admin/fragment::head">
 </head>
+
 <body class="hold-transition sidebar-mini fixed skin-blue">
-<!-- 引入页面头header -->
-<header th:replace="admin/header::main-header"></header>
+
+<!-- 引入顶部菜单栏header -->
+<header th:replace="admin/fragment::main-header"></header>
 
 <div class="wrapper">
-    <!-- 引入菜单栏模块 -->
-    <div th:replace="admin/main-sidebar::sidebar(${path})"></div>
+
+    <!-- 引入左侧菜单栏模块 -->
+    <div th:replace="admin/fragment::sidebar(1)"></div>
 
     <!-- 右侧主内容栏 -->
     <div class="content-wrapper">
@@ -39,28 +43,9 @@
 </div>
 
 <!-- 引入footer -->
-<div th:replace="admin/footer::footer"></div>
+<div th:replace="admin/fragment::footer"></div>
 
-<!--<script th:src="@{/plugins/pjax/jquery.pjax.js}"></script>-->
-<!--<script th:src="@{/plugins/pace/pace.min.js}"></script>-->
-<!--<script th:src="@{/js/adminlte.min.js}"></script>-->
-<!--<script th:src="@{/plugins/toast/js/jquery.toast.min.js}"></script>-->
-<!--<script th:src="@{/plugins/layer/layer.js}"></script>-->
-<!--<script th:src="@{/plugins/bootstrap-fileinput/js/fileinput.min.js}"></script>-->
-<!--<script th:src="@{/plugins/bootstrap-fileinput/js/locales/zh.js}"></script>-->
-<!--<script th:src="@{/js/app.js?version=2.0.1}"></script>-->
-<!--<script>-->
-<!--    Pace.options = {-->
-<!--        restartOnRequestAfter: false-->
-<!--    };-->
-<!--    $(document).ajaxStart(function () {-->
-<!--        Pace.restart();-->
-<!--    });-->
-<!--    $(document).pjax('a[data-pjax=true]', '.content-wrapper', {-->
-<!--        fragment: '.content-wrapper',-->
-<!--        timeout: 8000-->
-<!--    });-->
-<!--    var heading = "提示";-->
-<!--</script>-->
+<!--/*/<th:block th:replace="admin/fragment :: script">/*/-->
+<!--/*/</th:block>/*/-->
 </body>
 </html>

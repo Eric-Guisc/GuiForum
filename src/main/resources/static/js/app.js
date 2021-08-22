@@ -197,43 +197,41 @@ function doCheck() {
  * 提交文章
  * @param status 文章状态
  */
-function push(status) {
-    var id = $('#postId').val();
+function push() {
+//    var id = $('#postId').val();
     var title = $('#title').val();
-    var cateId = $('#cateId').val();
+    var categoryId = $('#categoryId').val();
     var tags = $('#tags').val();
-    var content =  $("#edit").froalaEditor('html.get');
+//    var content =  $("#edit").froalaEditor('html.get');
+//    var content =  $("#postContent").froalaEditor('html.get');
+    var content = tinyMCE.activeEditor.getContent();
     if(title == null || title == '') {
         showMsg("请输入文章标题", "info", 2000);
         return;
     }
-    if(cateId == null || cateId == '' || cateId == -1) {
+    if(categoryId == null || categoryId == '' || categoryId == -1) {
         showMsg("请输入选择分类", "info", 2000);
         return;
     }
 
     $.ajax({
         type: 'POST',
-        url: '/admin/post/save',
+        url: '/forum/admin/post/save',
         async: false,
         data: {
-            'id': id,
-            'postStatus': status,
-            'postTitle': title,
-            'postContent': content,
-            'cateId': cateId,
+//            'id': id,
+            'title': title,
+            'content': content,
+            'categoryId': categoryId,
             'tags': tags
         },
         success: function (data) {
+//            window.alert(typeof data);
             if (data.code == 1) {
-                if(status == 1) {
-                    showMsg("暂存成功", "success", 2000);
-                } else {
-                    showMsgAndRedirect("发布成功", "success", 1000, "/");
-                }
+                showMsgAndRedirect("发布成功", "success", 1000, "/forum/admin/post");
             } else {
-                showMsg(data.msg, "success", 2000);
 
+                showMsg(data.msg, "error", 2000);
             }
         }
     });

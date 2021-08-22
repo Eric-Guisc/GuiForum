@@ -22,4 +22,9 @@ public class PostService {
         int count = postMapper.selectPostRows(userId);
         return count;
     }
+
+    public int addPost(Post post) {
+        int count = postMapper.insertPost(post);
+        return count;
+    }
 }

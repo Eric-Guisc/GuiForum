@@ -12,7 +12,7 @@
         id, user_id, title, content, type, recommend_status, comment_count, score, category_id, create_time
     </sql>
 
-    <insert id="insertPost" parameterType="Post">
+    <insert id="insertPost" parameterType="Post" keyProperty="id">
         insert into post(<include refid="insertFields"></include>)
         values(#{userId}, #{title}, #{content}, #{type}, #{recommendStatus}, #{commentCount}, #{score}, #{categoryId}, #{createTime})
     </insert>
