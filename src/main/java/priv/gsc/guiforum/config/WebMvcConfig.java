@@ -24,7 +24,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/**/*.css","/**/*.scss","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg","/**/*.ico");
 
         registry.addInterceptor(loginRequiredInterceptor)
-                .excludePathPatterns("/**/*.css","/**/*.scss","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg","/**/*.ico");
+                .excludePathPatterns("/**/*.css","/**/*.scss","/**/*.js","/**/*.png","/**/*.jpg","/**/*.jpeg","/**/*.ico", "/**/*.gif", "/**/fonts/*", "/**/*.svg");
     }
 
 }

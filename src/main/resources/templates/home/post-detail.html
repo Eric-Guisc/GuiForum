@@ -141,34 +141,53 @@
             </div>
 
             <!-- 未登录不能评论提示 -->
-            <div class="tt-topic-list">
+            <div class="tt-topic-list" th:if="${loginUser==null}">
                 <div class="tt-item tt-item-popup">
                     <div class="tt-col-avatar">
-                        <img src="/static/images/notlogin.jpeg" class="avatar" alt="">
+                        <img th:src="@{/images/notlogin.jpeg}" class="avatar" alt="">
                     </div>
                     <div class="tt-col-message">
-                        检测到您未登录，需要先登录才能回复哦！
+                        检测到您未登录，需要先登录才能查看评论及回复哦！
                     </div>
                     <div class="tt-col-btn">
-                        <a type="button" href="/login" class="btn btn-primary">登录</a>
-                        <a type="button" href="/register" class="btn btn-secondary">注册</a>
+                        <a type="button" th:href="@{/login}" class="btn btn-primary">登录</a>
+                        <a type="button" th:href="@{/register}" class="btn btn-secondary">注册</a>
                     </div>
                 </div>
             </div>
 
+            <!-- 评论回复输入框 -->
+            <div class="pt-editor form-default" id="comment" th:if="${loginUser!=null}">
+                <form id="commentForm" itemid="comment-form">
+                    <h6 class="pt-title">发表回复</h6>
+                    <div class="form-group">
+                        <input type="hidden" name="entityType" id="entityType" value="1">
+                        <input type="hidden" name="entityId" id="entityId" th:value="${post.id}">
+                        <input type="hidden" name="targetUserId" id="targetUserId" th:value="${post.userId}">
+                        <textarea name="content" id="content" class="form-control" rows="5" placeholder="发表你的看法"></textarea>
+                    </div>
+                    <div class="pt-row">
+                        <div class="col-auto">
+                            <a href="javascript:void(0)" id="comment-btn" class="btn btn-secondary btn-width-lg">回复</a>
+                            <a href="javascript:void(0)" id="comment-cancel-btn" style="display: none;" class="btn btn btn-primary btn-width-lg">取消回复</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <!-- 一次评论 -->
-            <div class="tt-item">
+            <div class="tt-item" th:each="commentVo:${commentVoList}" th:if="${loginUser!=null}">
                 <div class="tt-single-topic">
                     <!-- 评论人的用户信息 -->
                     <div class="tt-item-header pt-noborder">
                         <div class="tt-item-info info-top">
                             <!-- 头像 -->
                             <div class="tt-avatar-icon">
-                                <img src="/static/images/avatar/1.jpeg" class="avatar" alt="">
+                                <img th:src="${commentVo.user.avatar}" class="avatar" alt="">
                             </div>
                             <!-- 用户名 -->
                             <div class="tt-avatar-title">
-                                <a href="/user/1" id="comment-20-user">管理员</a>
+                                <a href="/user/1" id="comment-20-user"><span th:text="${commentVo.user.username}">管理员</span></a>
                             </div>
                             <!-- 评论时间 -->
                             <a href="#" class="tt-info-time">
@@ -176,28 +195,31 @@
                                     <svg>
                                         <use xlink:href="#icon-time"></use>
                                     </svg>
-                                </i>4月前
+                                </i><span th:text="${commentVo.time}">4月前</span>
                             </a>
                         </div>
                     </div>
 
                     <!-- 评论框 -->
                     <div class="tt-item-description">
-                        测试评论！
+                        <span th:utext="${commentVo.comment.content}">测试评论！</span>
                         <!-- 回复 -->
                         <div class="topic-inner-list">
-                            <div class="topic-inner">
+                            <div class="topic-inner" th:each="replyVo:${commentVo.replyVoList}">
                                 <!-- 回复人的用户信息 -->
                                 <div class="topic-inner-title">
                                     <div class="topic-inner-avatar">
-                                        <img src="/static/images/avatar/1.jpeg" id="comment-21-user"
+                                        <img th:src="${replyVo.user.avatar}" id="comment-21-user"
                                              class="avatar" alt="">
                                     </div>
-                                    <div class="topic-inner-title"><a href="/user/1">管理员</a>
+                                    <div class="topic-inner-title"><a href="/user/1"><span th:text="${replyVo.user.username}">管理员</span></a>
                                     </div>
                                 </div>
                                 <!-- 回复内容 -->
-                                <div class="topic-inner-description"><a href='#comment-id-21'>@管理员</a> 管理员: 回复评论！</div>
+                                <div class="topic-inner-description">
+<!--                                    <a href='#comment-id-21'>@<span th:text="${replyVo.targetUser.username}">管理员</span></a> -->
+                                    <span th:utext="${replyVo.reply.content}">回复评论！</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,7 +243,8 @@
                         <!--                            <span class="tt-text">0</span>-->
                         <!--                        </a>-->
 
-                        <a href="#comment" data-id="21"
+                        <!-- 回复按钮 -->
+                        <a href="#comment" th:data-id-1="${commentVo.comment.id}" th:data-id-2="${commentVo.user.id}"
                            class="tt-icon-btn tt-hover-02 tt-small-indent reply-btn">
                             <i class="tt-icon">
                                 <svg>
@@ -231,6 +254,11 @@
                         </a>
                     </div>
                 </div>
+            </div>
+
+            <!-- 评论分页 -->
+            <div th:if="${loginUser!=null}">
+                <div th:replace="home/fragment::pagination"></div>
             </div>
 
         </div>

@@ -37,6 +37,9 @@ public class MapperTest {
     @Autowired
     private LoginTicketMapper loginTicketMapper;
 
+    @Autowired
+    private CommentMapper commentMapper;
+
     // *****************  PostMapper  **********************
     @Test
     public void insertPost() {
@@ -204,6 +207,37 @@ public class MapperTest {
     @Test
     public void updateValidStatus() {
         int count = loginTicketMapper.updateValidStatus("1a5cc08a864c4682a3dc234334955e8d", 1);
+        System.out.println(count);
+    }
+
+
+    // *****************  CommentMapper  **********************
+
+    @Test
+    public void insertComment() {
+        Comment comment = new Comment();
+        comment.setUserId(136);
+        comment.setEntityType(2);
+        comment.setEntityId(8);
+        comment.setTargetUserId(135);
+        comment.setContent("回复135");
+        comment.setShowStatus(0);
+        comment.setCreateTime(new Date());
+
+        commentMapper.insertComment(comment);
+    }
+
+    @Test
+    public void selectCommentsByEntityTypeAndEntityId() {
+        List<Comment> comments = commentMapper.selectCommentsByEntityTypeAndEntityId(1, 1, 0, 10);
+        for (Comment comment : comments) {
+            System.out.println(comment);
+        }
+    }
+
+    @Test
+    public void selectCommentRows() {
+        int count = commentMapper.selectCommentRows(1, 1);
         System.out.println(count);
     }
 

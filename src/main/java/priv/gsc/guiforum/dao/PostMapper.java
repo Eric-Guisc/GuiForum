@@ -21,4 +21,7 @@ public interface PostMapper {
     int selectPostRows(@Param("userId") int userId);
 
     Post selectPostById(int id);
+
+    // 更新帖子的评论数量
+    int updateCommentRows(int id, int commentCount);
 }

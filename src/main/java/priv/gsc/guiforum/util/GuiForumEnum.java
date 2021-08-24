@@ -63,6 +63,37 @@ public class GuiForumEnum {
         }
     }
 
+    // 不同实体对应的类型
+    public enum ENTITYTYPE {
+        ENTITY_TYPE_POST(1, "帖子"),
+        ENTITY_TYPE_COMMENT(2, "评论"),
+        ENTITY_TYPE_USER(3, "用户");
+
+        private int code;
+        private String remark;
+
+        private ENTITYTYPE(int code, String remark) {
+            this.code = code;
+            this.remark = remark;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+    }
+
 
 
 }

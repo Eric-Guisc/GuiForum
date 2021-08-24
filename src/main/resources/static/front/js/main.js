@@ -169,23 +169,33 @@ function loadPostList(page, type, isAppend) {
 /**
  * 回帖
  */
+const entityId_post = $('#entityId').val();
+const targetUserId_post = $('#targetUserId').val();
 $('#comment-btn').click(function () {
-    const content = $('#commentContent').val();
-    if (content.length < 3) {
+    const entityType = $('#entityType').val();
+    const entityId = $('#entityId').val();
+    const targetUserId = $('#targetUserId').val();
+    const content = $('#content').val();
+    if (content.length < 2) {
         showMsg('多写一点吧', "error", 1000);
         return;
     }
     $.ajax({
         type: 'POST',
-        url: '/comment',
-        async: false,
+        url: '/forum/comment/add',
+        async: true,
         data: {
-            'id': $('#postId').val(),
-            'commentContent': content
+            'entityType': entityType,
+            'entityId': entityId,
+            'targetUserId': targetUserId,
+            'content': content
         },
         success: function (data) {
             if (data.code == 1) {
                 showMsgAndReload(data.msg, "success", 1000);
+                setTimeout(function(){
+                    window.location.reload();
+                }, 1500);
             } else {
                 showMsg(data.msg, "error", 1000);
             }
@@ -197,41 +207,49 @@ $('#comment-btn').click(function () {
 /**
  * 回帖回复
  */
-$('#comment-btn').click(function () {
-    const content = $('#commentContent').val();
-    const commentId = $('#commentId').val();
-    const postId = $('#postId').val();
-    if (content.length < 3) {
-        showMsg(data.msg, "error", '多写一点吧');
-        return;
-    }
-    $.ajax({
-        type: 'POST',
-        url: '/comment',
-        async: false,
-        data: {
-            'postId': postId,
-            'commentId': commentId,
-            'commentContent': content
-        },
-        success: function (data) {
-            if (data.code == 1) {
-                showMsgAndReload(data.msg, "success", 1000);
-            } else {
-                showMsg(data.msg, "error", 1000);
-            }
-        }
-    });
-});
+//$('#comment-btn').click(function () {
+//    const entityType = $('#entityType').val();
+//    const entityId = $('#entityId').val();
+//    const targetUserId = $('#targetUserId').val();
+//    const content = $('#content').val();
+//    if (content.length < 2) {
+//        showMsg(data.msg, "error", '多写一点吧');
+//        return;
+//    }
+//    $.ajax({
+//        type: 'POST',
+//        url: '/forum/comment/add',
+//        async: true,
+//        data: {
+//            'entityType': entityType,
+//            'entityId': entityId,
+//            'targetUserId': targetUserId,
+//            'content': content
+//        },
+//        success: function (data) {
+//            if (data.code == 1) {
+//                showMsgAndReload(data.msg, "success", 1000);
+//                setTimeout(function(){
+//                    window.location.reload();
+//                }, 1500);
+//            } else {
+//                showMsg(data.msg, "error", 1000);
+//            }
+//        }
+//    });
+//});
 
 /**
  * 触发按钮
  */
 $('.reply-btn').click(function () {
-    const commentId = $(this).attr('data-id');
-    const userDisplayName = $('#comment-' + commentId + '-user').text();
-    $('#commentId').val(commentId);
-    $('#commentContent').attr('placeholder', '@' + userDisplayName + ': ');
+    const entityId = $(this).attr('data-id-1');
+    const targetUserId = $(this).attr('data-id-2');
+//    const userDisplayName = $('#comment-' + entityId + '-user').text();
+    $('#entityType').val(2);
+    $('#entityId').val(entityId);
+    $('#targetUserId').val(targetUserId);
+//    $('#content').attr('placeholder', '@' + userDisplayName + ': ');
     $('#comment-cancel-btn').show();
 });
 
@@ -239,8 +257,10 @@ $('.reply-btn').click(function () {
  * 取消回复
  */
 $('#comment-cancel-btn').click(function () {
-    $('#commentId').val('');
-    $('#commentContent').val('');
+    $('#entityType').val(1);
+    $('#entityId').val(entityId_post);
+    $('#targetUserId').val(targetUserId_post);
+//    $('#commentContent').val('');
     $('#comment-cancel-btn').hide();
 });
 
