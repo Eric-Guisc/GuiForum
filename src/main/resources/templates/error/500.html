@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home/fragment::head">
+    <meta charset="utf-8">
+    <title>500</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Forum - Responsive HTML5 Template">
+    <meta name="author" content="Forum">
+    <link rel="shortcut icon" th:href="@{/front/favicon/favicon.ico}">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/front/css/style.css?version=2.0.1}">
+    <link rel="stylesheet" th:href="@{/static/plugins/toast/css/jquery.toast.min.css}">
+    <link rel="stylesheet" th:href="@{/front/css/main.css?version=2.0.1}">
+    <link rel="stylesheet" th:href="@{/static/front/css/jsmodern-1.1.1.min.css}">
+</head>
+<body>
+<!-- tt-mobile menu -->
+<nav class="panel-menu" id="mobile-menu" th:replace="home/fragment::mobile-menu">
+</nav>
+
+<!-- header -->
+<header id="tt-header" th:replace="home/fragment::header(1)">
+</header>
+
+<main id="tt-pageContent" data-page="1" data-type="new" class="tt-offset-small">
+
+    <div class="container">
+        <h1>500</h1>
+    </div>
+</main>
+
+<!--/*/<th:block th:replace="home/fragment :: script">/*/-->
+
+<!--/*/</th:block>/*/-->
+
+</body>
+</html>

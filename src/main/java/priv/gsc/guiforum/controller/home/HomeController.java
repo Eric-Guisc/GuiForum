@@ -35,6 +35,9 @@ public class HomeController {
 
     @GetMapping("/index")
     public String getIndexPage(Model model, Page page) {
+        // 人为制造一个服务器错误
+//        Integer.valueOf("abc");
+
         // 方法调用前，SpringMVC会自动实例化Model和Page，并将Page注入到Model中，所以，在thymeleaf中可以直接访问Page对象中的数据。
 
         // Page的current、limit由前端传入(不传入，在Page中也有默认值)，rows、path需要设置
@@ -59,5 +62,10 @@ public class HomeController {
         model.addAttribute("postVO", postVO);
 
         return "/index";
+    }
+
+    @GetMapping("/error")
+    public String getErrorPage() {
+        return "/error/500";
     }
 }
