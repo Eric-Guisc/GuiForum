@@ -270,25 +270,19 @@ $('#comment-cancel-btn').click(function () {
 $('.comment-like').click(function () {
     const a = $(this);
     const commentId = $(this).attr('data-id');
-    const item = localStorage.getItem("comment-like-" + commentId);
-    if (item != null) {
-        showMsg('您已经点过赞了！', "info", 1000);
-        return;
-    }
 
     $.ajax({
         type: 'POST',
-        url: '/comment/like',
+        url: '/forum/like',
         async: false,
         data: {
-            'commentId': commentId
+            'entityType': 2,
+            'entityId':commentId
         },
         success: function (data) {
             if (data.code == 1) {
-                const count = parseInt(a.find('.tt-text').text()) + 1;
-                a.find('.tt-text').text(count);
-                a.attr('style', 'color: #2172cda;pointer-events: none;');
-                localStorage.setItem("comment-like-" + commentId, count);
+                a.find('.tt-text').text(data.result.likeCount);
+                a.find('.tt-icon').attr('style', data.result.likeStatus==1?'color:blue':'color:green');
             } else {
                 showMsg(data.msg, "error", 1000);
             }
@@ -334,24 +328,18 @@ $('.comment-dislike').click(function () {
 $('.post-like').click(function () {
     const a = $(this);
     const postId = $(this).attr('data-id');
-    const item = localStorage.getItem("post-like-" + postId);
-    if (item != null) {
-        showMsg('您已经点过赞了！', "info", 1000);
-        return;
-    }
     $.ajax({
         type: 'POST',
-        url: '/post/like',
+        url: '/forum/like',
         async: false,
         data: {
-            'postId': postId
+            'entityType': 1,
+            'entityId': postId
         },
         success: function (data) {
             if (data.code == 1) {
-                const count = parseInt(a.find('.tt-text').text()) + 1;
-                a.find('.tt-text').text(count);
-                a.attr('style', 'color: #2172cda;pointer-events: none;');
-                localStorage.setItem("post-like-" + postId, count);
+                a.find('.tt-text').text(data.result.likeCount);
+                a.find('.tt-icon').attr('style', data.result.likeStatus==1?'color:blue':'color:green');
             } else {
                 showMsg(data.msg, "error", 1000);
             }

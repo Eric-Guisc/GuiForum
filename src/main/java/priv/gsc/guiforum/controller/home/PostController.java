@@ -22,8 +22,8 @@ import java.util.Map;
 @RequestMapping("/post")
 public class PostController {
 
-//    @Autowired
-//    private HostHolder hostHolder;
+    @Autowired
+    private HostHolder hostHolder;
 
     @Autowired
     private PostService postService;
@@ -42,6 +42,9 @@ public class PostController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private LikeService likeService;
 
     private GuiForumEnum.ENTITYTYPE entitytype;
 
@@ -83,6 +86,13 @@ public class PostController {
         }
         model.addAttribute("tags", tags);
 
+        // 点赞数量
+        long entityLikeCount = likeService.findEntityLikeCount(entitytype.ENTITY_TYPE_POST.getCode(), postId);
+        model.addAttribute("likeCount", entityLikeCount);
+
+        // 点赞状态
+        int likeStatus = hostHolder.getUser() == null ? 0 : likeService.findEntityLikeStatus(hostHolder.getUser().getId(), entitytype.ENTITY_TYPE_POST.getCode(), postId);
+        model.addAttribute("likeStatus", likeStatus);
 
         // 评论
         // 评论分页信息
@@ -100,7 +110,7 @@ public class PostController {
         List<Map<String, Object>> commentVoList = new ArrayList<>();
         if (commentList != null) {
             for (Comment comment : commentList) {
-                // 评论VO = 评论 + 作者 + 转换后的时间表示 + 回复VO列表 + 回复数量
+                // 评论VO = 评论 + 作者 + 转换后的时间表示 + 回复VO列表 + 回复数量 + 点赞数量 + 点赞状态
                 Map<String, Object> commentVo = new HashMap<>();
                 commentVo.put("comment", comment);
                 commentVo.put("user", userService.findUserById(comment.getUserId()));
@@ -125,6 +135,10 @@ public class PostController {
 
                 commentVo.put("replyVoList", replyVoList);
                 commentVo.put("replyCount", commentService.findCommentRows(entitytype.ENTITY_TYPE_COMMENT.getCode(), comment.getId()));
+
+                commentVo.put("likeCount", likeService.findEntityLikeCount(entitytype.ENTITY_TYPE_COMMENT.getCode(), comment.getId())); // 点赞数量
+                likeStatus = hostHolder.getUser() == null ? 0 : likeService.findEntityLikeStatus(hostHolder.getUser().getId(), entitytype.ENTITY_TYPE_COMMENT.getCode(), comment.getId());
+                commentVo.put("likeStatus", likeStatus);    // 点赞状态
 
                 commentVoList.add(commentVo);
             }

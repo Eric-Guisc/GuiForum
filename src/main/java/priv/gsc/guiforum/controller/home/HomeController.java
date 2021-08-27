@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import priv.gsc.guiforum.entity.Page;
 import priv.gsc.guiforum.entity.Post;
 import priv.gsc.guiforum.service.*;
+import priv.gsc.guiforum.util.GuiForumEnum;
 import priv.gsc.guiforum.util.GuiForumUtils;
 
 import java.util.ArrayList;
@@ -32,6 +33,11 @@ public class HomeController {
     @Autowired
     private PostTagService postTagService;
 
+    @Autowired
+    private LikeService likeService;
+
+    private GuiForumEnum.ENTITYTYPE entitytype;
+
 
     @GetMapping("/index")
     public String getIndexPage(Model model, Page page) {
@@ -56,6 +62,7 @@ public class HomeController {
                 map.put("category", categoryService.findCategoryById(post.getCategoryId()));
                 List<Integer> tagIds = postTagService.findTagIdsByPostId(post.getId());
                 map.put("tags", tagService.findTagsByIds(tagIds));
+                map.put("likeCount", likeService.findEntityLikeCount(entitytype.ENTITY_TYPE_POST.getCode(), post.getId())); // 使用Redis查询的点赞数量
                 postVO.add(map);
             }
         }

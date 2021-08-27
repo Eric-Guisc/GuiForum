@@ -103,15 +103,16 @@
                                 <span class="tt-text" th:text="${post.commentCount}">3</span>
                             </a>
                         </div>
+                        <!-- 帖子点赞 -->
                         <div class="tt-item">
-                            <a href="javascript:void(0)" data-id="23"
+                            <a href="javascript:void(0)" th:data-id="${post.id}"
                                class="tt-icon-btn tt-position-bottom post-like">
                                 <i class="tt-icon">
                                     <svg>
                                         <use xlink:href="#icon-like"></use>
                                     </svg>
                                 </i>
-                                <span class="tt-text">1</span>
+                                <span class="tt-text" th:text="${likeCount}">1</span>
                             </a>
                         </div>
                         <!--                        <div class="tt-item">-->
@@ -226,13 +227,13 @@
 
                     <!-- 对评论的点赞、回复 -->
                     <div class="tt-item-info info-bottom">
-                        <a href="javascript:void(0)" data-id="21" class="tt-icon-btn comment-like">
+                        <a href="javascript:void(0)" th:data-id="${commentVo.comment.id}" class="tt-icon-btn comment-like">
                             <i class="tt-icon">
                                 <svg>
                                     <use xlink:href="#icon-like"></use>
                                 </svg>
                             </i>
-                            <span class="tt-text">1</span>
+                            <span class="tt-text" th:text="${commentVo.likeCount}">1</span>
                         </a>
                         <!--                        <a href="javascript:void(0)" data-id="21" class="tt-icon-btn comment-dislike">-->
                         <!--                            <i class="tt-icon">-->
