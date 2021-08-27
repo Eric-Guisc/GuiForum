@@ -24,4 +24,7 @@ public interface PostMapper {
 
     // 更新帖子的评论数量
     int updateCommentRows(int id, int commentCount);
+
+    // 根据Ids查找帖子 分页
+    List<Post> selectPostsByIds(List<Integer> ids, int offset, int limit);
 }

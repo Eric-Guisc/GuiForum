@@ -155,7 +155,7 @@
             <a th:classappend="|nav-link ${m==5} ? 'active' : ''|" href="/post/mark"><span>我的收藏</span></a>
         </li>
         <li th:classappend="|nav-item ${m==6} ? 'show' : ''|">
-            <a th:classappend="|nav-link ${m==6} ? 'active' : ''|" href="/post/like"><span>我的点赞</span></a>
+            <a th:classappend="|nav-link ${m==6} ? 'active' : ''|" th:href="@{/post/mylike}"><span>我的点赞</span></a>
         </li>
 
         <li th:classappend="|nav-item ${m==7} ? 'show' : ''|">

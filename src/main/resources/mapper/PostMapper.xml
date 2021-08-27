@@ -46,4 +46,19 @@
     <update id="updateCommentRows" >
         update post set comment_count = #{commentCount} where id = #{id}
     </update>
+
+    <select id="selectPostsByIds" resultType="Post">
+        select <include refid="selectFields"></include>
+        from post
+        <if test="#{ids}!=null">
+            where id in
+            <foreach collection="ids" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+            limit #{offset}, #{limit}
+        </if>
+        <if test="#{ids}==null">
+            where id = -1
+        </if>
+    </select>
 </mapper>

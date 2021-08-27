@@ -11,6 +11,7 @@ import priv.gsc.guiforum.dao.*;
 import priv.gsc.guiforum.entity.*;
 import priv.gsc.guiforum.util.GuiForumUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -66,6 +67,19 @@ public class MapperTest {
 
         int count = postMapper.selectPostRows(1);
         System.out.println(count);
+    }
+
+    @Test
+    public void selectPostsByIds() {
+        List<Integer> ids = new ArrayList<>();
+//        ids.add(1);
+//        ids.add(3);
+//        ids.add(4);
+//        ids.add(6);
+//        ids.add(7);
+        List<Post> posts = postMapper.selectPostsByIds(ids, 0, 10);
+        for (Post post : posts)
+            System.out.println(post);
     }
 
 

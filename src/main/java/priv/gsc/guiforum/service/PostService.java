@@ -32,4 +32,9 @@ public class PostService {
         Post post = postMapper.selectPostById(id);
         return post;
     }
+
+    public List<Post> findPostsByIds(List<Integer> ids, int offset, int limit) {
+        List<Post> posts = postMapper.selectPostsByIds(ids, offset, limit);
+        return posts;
+    }
 }

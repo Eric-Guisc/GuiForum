@@ -148,4 +148,38 @@ public class PostController {
 
         return "/home/post-detail";
     }
+
+
+    @GetMapping("/mylike")
+    public String getMyLikePost(Model model, Page page) {
+        User user = hostHolder.getUser();
+        if (user == null)
+            return "/home/login";
+
+        List<Integer> postIds = likeService.findPostLikeByUser(user.getId());
+        model.addAttribute("postVO", null);
+        if (postIds != null) {
+            page.setRows(postIds.size());
+            page.setPath("/post/mylike");
+
+            // 使用Map来包装post和user作为一条数据
+            List<Map<String, Object>> postVO = new ArrayList<>();
+            List<Post> posts = postService.findPostsByIds(postIds, page.getOffset(), page.getLimit());
+            if (posts != null) {
+                for (Post post : posts) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("post", post);
+                    map.put("time", GuiForumUtils.timeParseToPrettyTime(post.getCreateTime()));
+                    map.put("user", userService.findUserById(post.getUserId()));
+                    map.put("category", categoryService.findCategoryById(post.getCategoryId()));
+                    List<Integer> tagIds = postTagService.findTagIdsByPostId(post.getId());
+                    map.put("tags", tagService.findTagsByIds(tagIds));
+                    map.put("likeCount", likeService.findEntityLikeCount(entitytype.ENTITY_TYPE_POST.getCode(), post.getId())); // 使用Redis查询的点赞数量
+                    postVO.add(map);
+                }
+            }
+            model.addAttribute("postVO", postVO);
+        }
+        return "/home/mylike";
+    }
 }
