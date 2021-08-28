@@ -22,13 +22,13 @@
                         <div class="tt-item-info info-top">
                             <!-- 用户头像 -->
                             <div class="tt-avatar-icon">
-                                <a href="/user/9">
+                                <a th:href="@{|/user/profile/${user.id}|}">
                                     <img th:src="${user.avatar}" class="avatar" alt="">
                                 </a>
                             </div>
                             <!-- 用户名 -->
                             <div class="tt-avatar-title">
-                                <a href="/user/9" th:text="${user.username}">zhaoyun</a>
+                                <a th:href="@{|/user/profile/${user.id}|}" th:text="${user.username}">zhaoyun</a>
                             </div>
                             <!-- 博客时间 -->
                             <a href="#" class="tt-info-time">
@@ -184,11 +184,13 @@
                         <div class="tt-item-info info-top">
                             <!-- 头像 -->
                             <div class="tt-avatar-icon">
-                                <img th:src="${commentVo.user.avatar}" class="avatar" alt="">
+                                <a th:href="@{|/user/profile/${commentVo.user.id}|}">
+                                    <img th:src="${commentVo.user.avatar}" class="avatar" alt="">
+                                </a>
                             </div>
                             <!-- 用户名 -->
                             <div class="tt-avatar-title">
-                                <a href="/user/1" id="comment-20-user"><span th:text="${commentVo.user.username}">管理员</span></a>
+                                <a th:href="@{|/user/profile/${commentVo.user.id}|}" id="comment-20-user"><span th:text="${commentVo.user.username}">管理员</span></a>
                             </div>
                             <!-- 评论时间 -->
                             <a href="#" class="tt-info-time">
@@ -210,10 +212,11 @@
                                 <!-- 回复人的用户信息 -->
                                 <div class="topic-inner-title">
                                     <div class="topic-inner-avatar">
-                                        <img th:src="${replyVo.user.avatar}" id="comment-21-user"
-                                             class="avatar" alt="">
+                                        <a th:href="@{|/user/profile/${replyVo.user.id}|}">
+                                            <img th:src="${replyVo.user.avatar}" id="comment-21-user" class="avatar" alt="">
+                                        </a>
                                     </div>
-                                    <div class="topic-inner-title"><a href="/user/1"><span th:text="${replyVo.user.username}">管理员</span></a>
+                                    <div class="topic-inner-title"><a th:href="@{|/user/profile/${replyVo.user.id}|}"><span th:text="${replyVo.user.username}">管理员</span></a>
                                     </div>
                                 </div>
                                 <!-- 回复内容 -->

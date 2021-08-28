@@ -348,6 +348,54 @@ $('.post-like').click(function () {
 });
 
 /**
+ * 关注
+ */
+$('.follow-btn').click(function () {
+    const entityId = $(this).attr('data-id');
+    $.ajax({
+        type: 'POST',
+        url: '/forum/follow',
+        async: false,
+        data: {
+            'entityType': 3,
+            'entityId': entityId
+        },
+        success: function (data) {
+            if (data.code == 1) {
+//                $(this).parentNode.find(".follow-btn").attr('style', 'display:none;');
+                window.location.reload();
+            } else {
+                showMsg(data.msg, "error", 1000);
+            }
+        }
+    });
+});
+
+/**
+ * 取关
+ */
+$('.unfollow-btn').click(function () {
+    const entityId = $(this).attr('data-id');
+    $.ajax({
+        type: 'POST',
+        url: '/forum/unfollow',
+        async: false,
+        data: {
+            'entityType': 3,
+            'entityId': entityId
+        },
+        success: function (data) {
+            if (data.code == 1) {
+//                $(this).parentNode.find(".unfollow-btn").attr('style', 'display:none;');
+                window.location.reload();
+            } else {
+                showMsg(data.msg, "error", 1000);
+            }
+        }
+    });
+});
+
+/**
  * 加载未读数量
  */
 function loadNotReadCommentCount() {

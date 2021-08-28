@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home/fragment::head">
+</head>
+<body>
+
+<!-- tt-mobile menu -->
+<nav class="panel-menu" id="mobile-menu" th:replace="home/fragment::mobile-menu">
+</nav>
+
+<!-- header -->
+<header id="tt-header" th:replace="home/fragment::header(2)">
+</header>
+
+
+<main id="tt-pageContent" data-page="1" data-type="user" data-id="9" class="tt-offset-small">
+  <div class="tt-wrapper-section">
+    <div class="container">
+      <div class="tt-user-header">
+        <div class="tt-col-avatar">
+          <div class="tt-icon">
+            <img th:src="${user.avatar}" class="avatar" alt="">
+          </div>
+        </div>
+        <div class="tt-col-title">
+          <div class="tt-title">
+            <a href="#" th:text="${user.username}">zhaoyun</a>
+          </div>
+          <ul class="tt-list-badge">
+            <li class="follow-box pull-left">
+              <a href="javascript:void(0)" style="display:block" class="follow-btn" th:data-id="${user.id}" th:if="${hasFollowed==false}"><span class="tt-color03 tt-badge">关注Ta</span></a>
+              <a href="javascript:void(0)" style="display:block" class="unfollow-btn" th:data-id="${user.id}" th:if="${hasFollowed==true}"><span class="tt-color08 tt-badge">取消关注</span></a>
+            </li>
+            <li>
+              <span class="tt-color04 tt-badge">关注数：<b th:text="${followCount}">0</b>人</span>
+              <span class="tt-color04 tt-badge">粉丝数：<b th:text="${followerCount}">0</b>人</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<!--    <div class="container">-->
+<!--      <div class="tt-tab-wrapper">-->
+<!--        <div class="tt-topic-list">-->
+<!--          <div class="tt-list-header">-->
+<!--            <div class="tt-col-topic">标题</div>-->
+<!--            <div class="tt-col-category">文章分类</div>-->
+<!--            <div class="tt-col-value hide-mobile">点赞数</div>-->
+<!--            <div class="tt-col-value hide-mobile">回复数</div>-->
+<!--            <div class="tt-col-value hide-mobile">点击数</div>-->
+<!--            <div class="tt-col-value">发布</div>-->
+<!--          </div>-->
+<!--          <div id="tt-item-wrapper" data-type="user">-->
+<!--            <div class="tt-item">-->
+<!--              <div class="tt-col-avatar">-->
+<!--                <img src="/static/images/avatar/9.jpeg" class="avatar" alt="">-->
+<!--              </div>-->
+<!--              <div class="tt-col-description">-->
+<!--                <h6 class="tt-title"><a href="/post/22">-->
+<!--                  腾讯首次公布研发大数据：研发人员占比 66%，C++ 是最常用语言-->
+<!--                </a></h6>-->
+<!--                <div class="row align-items-center no-gutters">-->
+<!--                  <div class="col-11">-->
+<!--                    <ul class="tt-list-badge">-->
+<!--                      <li><a-->
+<!--                              href="/tag/56"><span-->
+<!--                              class="tt-badge">腾讯</span></a></li>-->
+<!--                      <li><a-->
+<!--                              href="/tag/50"><span-->
+<!--                              class="tt-badge">大数据</span></a></li>-->
+<!--                      <li><a-->
+<!--                              href="/tag/57"><span-->
+<!--                              class="tt-badge">开源</span></a></li>-->
+<!--                    </ul>-->
+<!--                  </div>-->
+<!--                  <div class="col-1 ml-auto show-mobile">-->
+<!--                    <div class="tt-value">5月前</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="tt-col-category"><a href="/category/10"><span-->
+<!--                      class="tt-color04 tt-badge">大数据</span></a>-->
+<!--              </div>-->
+<!--              <div class="tt-col-value  hide-mobile">0</div>-->
+<!--              <div class="tt-col-value tt-color-select  hide-mobile">2</div>-->
+<!--              <div class="tt-col-value  hide-mobile">39</div>-->
+<!--              <div class="tt-col-value hide-mobile">5月前</div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          &lt;!&ndash; 分页 &ndash;&gt;-->
+<!--          <div th:replace="home/fragment::pagination"></div>-->
+
+
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
+</main>
+
+<div id="js-popup-settings" class="tt-popup-settings" th:replace="home/fragment::popup-settings">
+  <div class="tt-btn-col-close">
+    <a href="#">
+			<span class="tt-icon-title">
+				<svg>
+					<use xlink:href="#icon-settings_fill"></use>
+				</svg>
+			</span>
+      <span class="tt-icon-text">
+				Settings
+			</span>
+      <span class="tt-icon-close">
+				<svg>
+					<use xlink:href="#icon-cancel"></use>
+				</svg>
+			</span>
+    </a>
+  </div>
+  <form class="form-default">
+    <div class="tt-form-upload">
+      <div class="row no-gutter">
+        <div class="col-auto">
+          <div class="tt-avatar">
+            <svg>
+              <use xlink:href="#icon-ava-d"></use>
+            </svg>
+          </div>
+        </div>
+        <div class="col-auto ml-auto">
+          <a href="#" class="btn btn-primary">Upload Picture</a>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="settingsUserName">Username</label>
+      <input type="text" name="name" class="form-control" id="settingsUserName" placeholder="azyrusmax">
+    </div>
+    <div class="form-group">
+      <label for="settingsUserEmail">Email</label>
+      <input type="text" name="name" class="form-control" id="settingsUserEmail" placeholder="Sample@sample.com">
+    </div>
+    <div class="form-group">
+      <label for="settingsUserPassword">Password</label>
+      <input type="password" name="name" class="form-control" id="settingsUserPassword"
+             placeholder="************">
+    </div>
+    <div class="form-group">
+      <label for="settingsUserLocation">Location</label>
+      <input type="text" name="name" class="form-control" id="settingsUserLocation" placeholder="Slovakia">
+    </div>
+    <div class="form-group">
+      <label for="settingsUserWebsite">Website</label>
+      <input type="text" name="name" class="form-control" id="settingsUserWebsite" placeholder="Sample.com">
+    </div>
+    <div class="form-group">
+      <label for="settingsUserAbout">About</label>
+      <textarea name="" placeholder="Few words about you" class="form-control" id="settingsUserAbout"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="settingsUserAbout">Notify me via Email</label>
+      <div class="checkbox-group">
+        <input type="checkbox" id="settingsCheckBox01" name="checkbox">
+        <label for="settingsCheckBox01">
+          <span class="check"></span>
+          <span class="box"></span>
+          <span class="tt-text">When someone replies to my thread</span>
+        </label>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="settingsCheckBox02" name="checkbox">
+        <label for="settingsCheckBox02">
+          <span class="check"></span>
+          <span class="box"></span>
+          <span class="tt-text">When someone likes my thread or reply</span>
+        </label>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="settingsCheckBox03" name="checkbox">
+        <label for="settingsCheckBox03">
+          <span class="check"></span>
+          <span class="box"></span>
+          <span class="tt-text">When someone mentions me</span>
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <a href="#" class="btn btn-secondary">Save</a>
+    </div>
+  </form>
+</div>
+
+<a href="/admin/post/new" class="tt-btn-create-topic" th:replace="home/fragment::create-topic">
+    <span class="tt-icon">
+        <svg>
+          <use xlink:href="#icon-create_new"></use>
+        </svg>
+    </span>
+</a>
+
+<div class="modal fade show" id="modalAdvancedSearch" tabindex="-1" role="dialog" aria-label="myModalLabel"
+     aria-modal="true" style="display: none;" th:replace="home/fragment::modal-advanced-search">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="tt-modal-advancedSearch">
+        <div class="tt-modal-title">
+          <i class="pt-icon">
+            <svg>
+              <use xlink:href="#icon-advanced_search"></use>
+            </svg>
+          </i>
+          <!--                    高级搜索-->
+          搜索
+          <a class="pt-close-modal" href="#" data-dismiss="modal">
+            <svg class="icon">
+              <use xlink:href="#icon-cancel"></use>
+            </svg>
+          </a>
+        </div>
+        <form class="form-default" action="/">
+          <div class="form-group">
+            <i class="pt-customInputIcon">
+              <svg class="tt-icon">
+                <use xlink:href="#icon-search"></use>
+              </svg>
+            </i>
+            <input type="text" name="keywords" class="form-control pt-customInputSearch" id="searchKeywords"
+                   placeholder="搜索所有文章...">
+          </div>
+          <!--                    <div class="form-group">-->
+          <!--                        <label for="searchName">发布用户</label>-->
+          <!--                        <input type="text" name="name" class="form-control" id="searchName" >-->
+          <!--                    </div>-->
+          <!--                    <div class="form-group">-->
+          <!--                        <label for="searchCateId">所属分类</label>-->
+          <!--                        <select class="form-control" id="searchCateId">-->
+          <!--                            <option>any</option>-->
+          <!--                            <option>value 01</option>-->
+          <!--                            <option>value 02</option>-->
+          <!--                            <option>value 03</option>-->
+          <!--                        </select>-->
+          <!--                    </div>-->
+          <div class="form-group">
+            <button type="submit" class="btn btn-secondary btn-block">搜索</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--/*/<th:block th:replace="home/fragment :: script">/*/-->
+
+<!--/*/</th:block>/*/-->
+
+</body>
+</html>

@@ -45,7 +45,7 @@
                             <div class="tt-item" th:each="item:${postVO}">
                                 <!-- 作者 -->
                                 <div class="tt-col-avatar">
-                                    <a href="/user/9">
+                                    <a th:href="@{|/user/profile/${item.user.id}|}">
                                         <img th:src="${item.user.avatar}" class="avatar" th:alt="${item.user.username}">
                                     </a>
                                 </div>
