@@ -7,6 +7,7 @@ public class RedisKeyUtil {
     private static final String PREFIX_POST_LIKE_BY_USER = "like:post:by:user"; // 用户点赞的帖子
     private static final String PREFIX_FOLLOW = "follow";                       // 用户关注
     private static final String PREFIX_FOLLOWER = "follower";                   // 粉丝
+    private static final String PREFIX_VIEW = "view";                           // 浏览量
 
 
     // 某个实体的赞
@@ -31,6 +32,12 @@ public class RedisKeyUtil {
     // follower:entityType:entityId -> zset(userId,now)
     public static String getFollowerKey(int entityType, int entityId) {
         return PREFIX_FOLLOWER + SPLIT + entityType + SPLIT + entityId;
+    }
+
+    // 某个实体的浏览量
+    // view:entityType:entityId -> string
+    public static String getViewKey(int entityType, int entityId) {
+        return PREFIX_VIEW + SPLIT + entityType + SPLIT + entityId;
     }
 
 }

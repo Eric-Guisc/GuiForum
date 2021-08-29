@@ -46,6 +46,9 @@ public class PostController {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private ViewService viewService;
+
     private GuiForumEnum.ENTITYTYPE entitytype;
 
 
@@ -53,6 +56,9 @@ public class PostController {
     public String getPostDetail(@PathVariable("postId") int postId, Model model, Page page) {
         if (postId <= 0)
             throw new IllegalArgumentException("帖子ID不正确");
+
+        // 浏览量+1
+        viewService.addViewCount(entitytype.ENTITY_TYPE_POST.getCode(), postId);
 
         // 帖子
         Post post = postService.findPostById(postId);
@@ -93,6 +99,10 @@ public class PostController {
         // 点赞状态
         int likeStatus = hostHolder.getUser() == null ? 0 : likeService.findEntityLikeStatus(hostHolder.getUser().getId(), entitytype.ENTITY_TYPE_POST.getCode(), postId);
         model.addAttribute("likeStatus", likeStatus);
+
+        // 浏览量
+        long viewCount = viewService.findViewCount(entitytype.ENTITY_TYPE_POST.getCode(), postId);
+        model.addAttribute("viewCount", viewCount);
 
         // 评论
         // 评论分页信息

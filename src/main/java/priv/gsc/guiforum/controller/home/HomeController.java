@@ -36,6 +36,9 @@ public class HomeController {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private ViewService viewService;
+
     private GuiForumEnum.ENTITYTYPE entitytype;
 
 
@@ -63,6 +66,7 @@ public class HomeController {
                 List<Integer> tagIds = postTagService.findTagIdsByPostId(post.getId());
                 map.put("tags", tagService.findTagsByIds(tagIds));
                 map.put("likeCount", likeService.findEntityLikeCount(entitytype.ENTITY_TYPE_POST.getCode(), post.getId())); // 使用Redis查询的点赞数量
+                map.put("viewCount", viewService.findViewCount(entitytype.ENTITY_TYPE_POST.getCode(), post.getId()));
                 postVO.add(map);
             }
         }
