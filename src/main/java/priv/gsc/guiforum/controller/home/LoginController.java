@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import priv.gsc.guiforum.service.UserService;
 import priv.gsc.guiforum.util.GuiForumEnum;
 import priv.gsc.guiforum.util.JsonResult;
+import priv.gsc.guiforum.util.RedisKeyUtil;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +35,9 @@ public class LoginController {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
 
     @GetMapping("/login")
     public String getLoginPage() {
@@ -41,9 +46,16 @@ public class LoginController {
 
     @PostMapping(value ="/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public String login(String usernameOrEmail, String password, String kaptcha, boolean rememberMe, HttpSession session, HttpServletResponse response) {
+    public String login(String usernameOrEmail, String password, String kaptcha, boolean rememberMe, /*HttpSession session,*/
+                        HttpServletResponse response, @CookieValue("kaptchaOwner") String kaptchaOwner) {
         // 检查验证码
-        String code = (String) session.getAttribute("kaptcha");
+//        String code = (String) session.getAttribute("kaptcha");
+        String code = null;
+        if (StringUtils.isNotBlank(kaptchaOwner)) {
+            String kaptchaKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
+            code = (String) redisTemplate.opsForValue().get(kaptchaKey);
+        }
+
         if (StringUtils.isBlank(kaptcha) || StringUtils.isBlank(code) || !code.equalsIgnoreCase(kaptcha)) {
             return JsonResult.error("验证码错误");
         }

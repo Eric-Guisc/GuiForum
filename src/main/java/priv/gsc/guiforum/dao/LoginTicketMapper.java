@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Update;
 import priv.gsc.guiforum.entity.LoginTicket;
 
 @Mapper
+@Deprecated     // 不推荐使用的注解
 public interface LoginTicketMapper {
 
     // 新增登录凭证

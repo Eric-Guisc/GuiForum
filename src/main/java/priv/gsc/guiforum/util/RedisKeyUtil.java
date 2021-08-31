@@ -8,6 +8,9 @@ public class RedisKeyUtil {
     private static final String PREFIX_FOLLOW = "follow";                       // 用户关注
     private static final String PREFIX_FOLLOWER = "follower";                   // 粉丝
     private static final String PREFIX_VIEW = "view";                           // 浏览量
+    private static final String PREFIX_KAPTCHA = "kaptcha";                     // 验证码
+    private static final String PREFIX_TICKET = "ticket";                       // 登录凭证
+    private static final String PREFIX_USER = "user";                           // 缓存的用户
 
 
     // 某个实体的赞
@@ -38,6 +41,21 @@ public class RedisKeyUtil {
     // view:entityType:entityId -> string
     public static String getViewKey(int entityType, int entityId) {
         return PREFIX_VIEW + SPLIT + entityType + SPLIT + entityId;
+    }
+
+    // 验证码
+    public static String getKaptchaKey(String owner) {
+        return PREFIX_KAPTCHA + SPLIT + owner;
+    }
+
+    // 登录凭证
+    public static String getTicketKey(String ticket) {
+        return PREFIX_TICKET + SPLIT + ticket;
+    }
+
+    // 缓存的用户
+    public static String getUserKey(int userId) {
+        return PREFIX_USER + SPLIT + userId;
     }
 
 }

@@ -3,6 +3,7 @@ package priv.gsc.guiforum.service;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -13,11 +14,13 @@ import priv.gsc.guiforum.entity.User;
 import priv.gsc.guiforum.util.GuiForumEnum;
 import priv.gsc.guiforum.util.GuiForumUtils;
 import priv.gsc.guiforum.util.MailClient;
+import priv.gsc.guiforum.util.RedisKeyUtil;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserService {
@@ -38,12 +41,17 @@ public class UserService {
     private UserMapper userMapper;
 
     @Autowired
-    private LoginTicketMapper loginTicketMapper;
+//    private LoginTicketMapper loginTicketMapper;
+    private RedisTemplate redisTemplate;
 
     private GuiForumEnum.ACTIVATION activationEnum;
 
     public User findUserById(int id) {
-        User user = userMapper.selectUserById(id);
+//        User user = userMapper.selectUserById(id);
+//        return user;
+        User user = getCache(id);
+        if (user == null)
+            user = initCache(id);
         return user;
     }
 
@@ -95,6 +103,8 @@ public class UserService {
         }
         else if (user.getActivationCode().equals(code)) {   // 激活用户
             userMapper.updateActivationStatus(userId, 1);
+            // 修改了user的激活状态，所以调用clearCache(userId)
+            clearCache(userId);
             return activationEnum.ACTIVATION_SUCCESS.getCode();
         } else {    // 激活失败
             return activationEnum.ACTIVATION_FAILURE.getCode();
@@ -130,14 +140,40 @@ public class UserService {
         loginTicket.setTicket(GuiForumUtils.generateUUID());
         loginTicket.setValidStatus(0);      // 有效
         loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSeconds * 1000));
-        loginTicketMapper.insertLoginTicket(loginTicket);
+//        loginTicketMapper.insertLoginTicket(loginTicket);
+        String ticketKey = RedisKeyUtil.getTicketKey(loginTicket.getTicket());
+        redisTemplate.opsForValue().set(ticketKey, loginTicket);
         map.put("ticket", loginTicket.getTicket());
 
         return map;
     }
 
     public void logout(String ticket) {
-        loginTicketMapper.updateValidStatus(ticket, 1);
+//        loginTicketMapper.updateValidStatus(ticket, 1);
+        String ticketKey = RedisKeyUtil.getTicketKey(ticket);
+        LoginTicket loginTicket = (LoginTicket) redisTemplate.opsForValue().get(ticketKey);
+        loginTicket.setValidStatus(1);
+        redisTemplate.opsForValue().set(ticketKey, loginTicket);
+    }
+
+
+    // 使用Redis缓存用户信息
+    // 1、优先从缓存中取值
+    private User getCache(int userId) {
+        String userKey = RedisKeyUtil.getUserKey(userId);
+        return (User) redisTemplate.opsForValue().get(userKey);
+    }
+    // 2、取不到时初始化缓存数据
+    private User initCache(int userId) {
+        String userKey = RedisKeyUtil.getUserKey(userId);
+        User user = userMapper.selectUserById(userId);
+        redisTemplate.opsForValue().set(userKey, user, 3600, TimeUnit.SECONDS);
+        return user;
+    }
+    // 3、数据变更时清除缓存数据
+    private void clearCache(int userId) {
+        String userKey = RedisKeyUtil.getUserKey(userId);
+        redisTemplate.delete(userKey);
     }
 
 }
