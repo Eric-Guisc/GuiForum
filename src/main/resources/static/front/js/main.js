@@ -270,6 +270,8 @@ $('#comment-cancel-btn').click(function () {
 $('.comment-like').click(function () {
     const a = $(this);
     const commentId = $(this).attr('data-id');
+    const entityUserId = $(this).attr('data-id1');
+    const postId = $(this).attr('data-id2');
 
     $.ajax({
         type: 'POST',
@@ -277,7 +279,9 @@ $('.comment-like').click(function () {
         async: false,
         data: {
             'entityType': 2,
-            'entityId':commentId
+            'entityId':commentId,
+            'entityUserId':entityUserId,
+            'postId':postId
         },
         success: function (data) {
             if (data.code == 1) {
@@ -328,13 +332,17 @@ $('.comment-dislike').click(function () {
 $('.post-like').click(function () {
     const a = $(this);
     const postId = $(this).attr('data-id');
+    const entityUserId = $(this).attr('data-id1');
+
     $.ajax({
         type: 'POST',
         url: '/forum/like',
         async: false,
         data: {
             'entityType': 1,
-            'entityId': postId
+            'entityId': postId,
+            'entityUserId':entityUserId,
+            'postId':postId
         },
         success: function (data) {
             if (data.code == 1) {

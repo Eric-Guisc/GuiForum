@@ -17,4 +17,6 @@ public interface CommentMapper {
     // 根据entityType和entityId查询评论的数量
     int selectCommentRows(int entityType, int entityId);
 
+    // 根据Id查找评论
+    Comment selectCommentById(int id);
 }

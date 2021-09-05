@@ -105,7 +105,7 @@
                         </div>
                         <!-- 帖子点赞 -->
                         <div class="tt-item">
-                            <a href="javascript:void(0)" th:data-id="${post.id}"
+                            <a href="javascript:void(0)" th:data-id="${post.id}" th:data-id1="${user.id}"
                                class="tt-icon-btn tt-position-bottom post-like">
                                 <i class="tt-icon">
                                     <svg>
@@ -230,7 +230,7 @@
 
                     <!-- 对评论的点赞、回复 -->
                     <div class="tt-item-info info-bottom">
-                        <a href="javascript:void(0)" th:data-id="${commentVo.comment.id}" class="tt-icon-btn comment-like">
+                        <a href="javascript:void(0)" th:data-id="${commentVo.comment.id}" th:data-id1="${commentVo.user.id}" th:data-id2="${post.id}" class="tt-icon-btn comment-like">
                             <i class="tt-icon">
                                 <svg>
                                     <use xlink:href="#icon-like"></use>

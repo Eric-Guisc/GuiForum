@@ -94,6 +94,37 @@ public class GuiForumEnum {
         }
     }
 
+    // 不同主题对应的类型
+    public enum TOPIC {
+        TOPIC_COMMENT("comment", "评论"),
+        TOPIC_LIKE("like", "点赞"),
+        TOPIC_FOLLOW("follow", "关注");
+
+        private String topic;
+        private String remark;
+
+        private TOPIC(String topic, String remark) {
+            this.topic = topic;
+            this.remark = remark;
+        }
+
+        public String getTopic() {
+            return topic;
+        }
+
+        public void setTopic(String topic) {
+            this.topic = topic;
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+    }
+
 
 
 }
